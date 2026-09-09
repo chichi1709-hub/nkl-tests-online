@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Let's Be Friends Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+img{max-width:100%}
+:root{
+  --bg:#eef5ea; --card:#ffffff; --ink:#233a2a; --muted:#6f8374; --line:#d7e6cd;
+  --green:#3f9440; --green-d:#2f7a33; --green-soft:#eaf5e6;
+  --blue:#2b6fb0; --blue-soft:#eaf2fb; --blue-line:#cfe0f2;
+  --yellow:#e0a92e; --yellow-soft:#fdf3d2;
+  --red:#e2603b; --good:#3f9440; --bad:#e14b3b;
+  --ring:rgba(63,148,64,.35);
+  --shadow:0 2px 0 rgba(0,0,0,.04),0 8px 24px rgba(40,80,45,.08);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101a14; --card:#18271e; --ink:#e7f1e6; --muted:#93a898; --line:#284034;
+  --green:#6cc06a; --green-d:#7fd07c; --green-soft:#173021;
+  --blue:#77b6e6; --blue-soft:#132633; --blue-line:#274a63;
+  --yellow:#e9bf59; --yellow-soft:#2a2413;
+  --red:#f0795a; --good:#6cc06a; --bad:#f0795a; --ring:rgba(108,192,106,.4);
+  --shadow:0 2px 0 rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --bg:#101a14; --card:#18271e; --ink:#e7f1e6; --muted:#93a898; --line:#284034;
+  --green:#6cc06a; --green-d:#7fd07c; --green-soft:#173021;
+  --blue:#77b6e6; --blue-soft:#132633; --blue-line:#274a63;
+  --yellow:#e9bf59; --yellow-soft:#2a2413;
+  --red:#f0795a; --good:#6cc06a; --bad:#f0795a; --ring:rgba(108,192,106,.4);
+  --shadow:0 2px 0 rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Nunito",system-ui,Segoe UI,sans-serif;font-size:17px;line-height:1.5;}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 140px;}
+
+/* header */
+header{position:relative;text-align:center;padding:30px 12px 10px;}
+.badge-pill{display:inline-block;background:var(--green);color:#fff;font-family:"Fredoka";font-weight:600;
+  font-size:13px;letter-spacing:.5px;padding:5px 14px;border-radius:999px;}
+h1{font-family:"Fredoka";font-weight:700;font-size:clamp(28px,6vw,42px);margin:12px 0 4px;color:var(--ink);
+  text-wrap:balance;line-height:1.05;}
+.sub{color:var(--muted);font-weight:600;margin:0;}
+.hi{display:flex;justify-content:center;gap:6px;margin:14px 0 0;}
+.hi svg{width:56px;height:56px}
+
+/* sticky progress */
+.hud{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:blur(8px);padding:10px 0;margin-bottom:8px;}
+.hud-in{max-width:760px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px;}
+.bar{flex:1;height:12px;border-radius:999px;background:var(--line);overflow:hidden;}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#8ec63f);
+  border-radius:999px;transition:width .35s ease;}
+.scorechip{font-family:"Fredoka";font-weight:600;font-size:14px;color:var(--green-d);
+  background:var(--green-soft);border:1.5px solid var(--line);padding:5px 12px;border-radius:999px;white-space:nowrap;}
+
+/* card */
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px 18px 20px;
+  margin:16px 0;box-shadow:var(--shadow);}
+.card.blue{border-color:var(--blue-line);}
+.chead{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.num{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--green);color:#fff;
+  font-family:"Fredoka";font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.card.blue .num{background:var(--blue);}
+.ctitle{font-family:"Fredoka";font-weight:600;font-size:19px;line-height:1.15;text-wrap:balance;}
+
+/* widget */
+.w{padding:10px 0;border-top:1px dashed var(--line);}
+.w:first-of-type{border-top:0;}
+.wq{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.tile{flex:0 0 auto;width:60px;height:60px;border-radius:12px;background:var(--green-soft);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.card.blue .tile{background:var(--blue-soft);}
+.tile svg{width:56px;height:56px;display:block;}
+.wtext{font-weight:700;font-size:17px;flex:1;min-width:160px;}
+.letters{font-family:"Fredoka";letter-spacing:3px;font-weight:600;font-size:20px;}
+
+/* option buttons */
+.opts{display:flex;flex-wrap:wrap;gap:8px;}
+.opt{font-family:"Nunito";font-weight:700;font-size:16px;color:var(--ink);background:var(--card);
+  border:2px solid var(--line);border-radius:12px;padding:9px 16px;cursor:pointer;transition:transform .08s,border-color .15s,background .15s;
+  min-height:44px;}
+.opt:hover{border-color:var(--green);}
+.opt:active{transform:translateY(1px) scale(.99);}
+.opt.sel{background:var(--blue-soft);border-color:var(--blue);color:var(--blue);}
+.opt.good{background:var(--green-soft);border-color:var(--good);color:var(--green-d);}
+.opt.bad{background:color-mix(in srgb,var(--red) 14%,var(--card));border-color:var(--bad);color:var(--bad);}
+.opt:focus-visible{outline:3px solid var(--ring);outline-offset:2px;}
+
+/* inputs & selects */
+input.txt,select.sel{font-family:"Fredoka";font-weight:600;font-size:18px;color:var(--ink);background:var(--card);
+  border:2px solid var(--line);border-radius:12px;padding:8px 12px;min-height:44px;}
+input.txt{width:96px;text-align:center;}
+input.txt.wide{width:150px;}
+select.sel{cursor:pointer;min-width:150px;}
+input.txt:focus,select.sel:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);}
+.mark{font-family:"Fredoka";font-weight:700;margin-left:8px;font-size:16px;}
+.mark.good{color:var(--good);}
+.mark.bad{color:var(--bad);}
+.correct{display:inline-block;margin-left:8px;font-weight:700;color:var(--green-d);}
+.field.good input,.field.good select{border-color:var(--good);background:var(--green-soft);}
+.field.bad input,.field.bad select{border-color:var(--bad);background:color-mix(in srgb,var(--red) 12%,var(--card));}
+.field{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px;}
+.passage{background:var(--green-soft);border:2px solid var(--line);border-radius:14px;padding:14px 18px;font-size:16px;}
+.passage p{margin:6px 0;}
+.pcap{font-size:12px;color:var(--muted);font-style:italic;margin-top:8px;}
+textarea.write{width:100%;min-height:88px;font-family:"Nunito";font-size:16px;color:var(--ink);
+  background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:12px;resize:vertical;}
+textarea.write:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);}
+
+/* footer bar */
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--card) 92%,transparent);
+  backdrop-filter:blur(10px);border-top:2px solid var(--line);padding:12px 16px;}
+.footer-in{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.btn{font-family:"Fredoka";font-weight:600;font-size:18px;border:0;border-radius:14px;padding:12px 26px;cursor:pointer;
+  min-height:52px;transition:transform .08s,filter .15s;}
+.btn:active{transform:translateY(1px) scale(.99);}
+.btn-main{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-d);}
+.btn-main:hover{filter:brightness(1.05);}
+.btn-ghost{background:transparent;color:var(--muted);border:2px solid var(--line);}
+.msg{font-family:"Fredoka";font-weight:600;color:var(--green-d);font-size:16px;}
+
+/* result banner */
+.result{display:none;text-align:center;background:var(--card);border:2px solid var(--line);border-radius:20px;
+  padding:22px;margin:16px 0;box-shadow:var(--shadow);}
+.result.show{display:block;animation:pop .4s ease;}
+.result .big{font-family:"Fredoka";font-weight:700;font-size:40px;color:var(--green-d);}
+.result .stars{font-size:34px;letter-spacing:4px;margin:6px 0;}
+.result .rmsg{font-family:"Fredoka";font-weight:600;font-size:22px;margin-top:4px;}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.foot-note{text-align:center;color:var(--muted);font-size:13px;margin:6px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="hud">
+  <div class="hud-in">
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scorechip" id="chip">0 / 0</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <span class="badge-pill">ENGLISH · GRADE 1</span>
+    <h1>Let's Be Friends</h1>
+    <p class="sub">Unit 1 · Week 4 — What do friends do together?</p>
+    <div class="hi" id="hi"></div>
+  </header>
+
+  <div class="result" id="result">
+    <div class="big" id="rscore">0%</div>
+    <div class="stars" id="rstars">⭐</div>
+    <div class="rmsg" id="rmsg"></div>
+  </div>
+
+  <div id="quiz"></div>
+  <p class="foot-note">Word search &amp; drawing (bài 21–22) có trong bản in PDF.</p>
+</div>
+
+<div class="footer">
+  <div class="footer-in">
+    <button class="btn btn-main" id="check">Kiểm tra bài làm ✅</button>
+    <button class="btn btn-ghost" id="reset">Làm lại 🔄</button>
+    <span class="msg" id="msg"></span>
+  </div>
+</div>
+
+<script>
+const SVGS = {"book": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><path d=\"M30,34 h26 a4,4 0 0 1 4,4 v52 a4,4 0 0 0 -4,-4 h-26 Z\" fill=\"#5aa9d6\"/><path d=\"M90,34 h-26 a4,4 0 0 0 -4,4 v52 a4,4 0 0 1 4,-4 h26 Z\" fill=\"#3f9440\"/><rect x=\"58\" y=\"34\" width=\"4\" height=\"56\" fill=\"#33475e\"/></svg>", "six": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><rect x=\"30\" y=\"30\" width=\"60\" height=\"60\" rx=\"10\" fill=\"#fff\" stroke=\"#cbd3da\" stroke-width=\"2\"/><circle cx=\"45\" cy=\"45\" r=\"6\" fill=\"#33475e\"/><circle cx=\"45\" cy=\"60\" r=\"6\" fill=\"#33475e\"/><circle cx=\"45\" cy=\"75\" r=\"6\" fill=\"#33475e\"/><circle cx=\"75\" cy=\"45\" r=\"6\" fill=\"#33475e\"/><circle cx=\"75\" cy=\"60\" r=\"6\" fill=\"#33475e\"/><circle cx=\"75\" cy=\"75\" r=\"6\" fill=\"#33475e\"/></svg>", "mop": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><rect x=\"56\" y=\"24\" width=\"8\" height=\"50\" fill=\"#a5702f\"/><path d=\"M44,74 h32 l-6,28 h-20 Z\" fill=\"#e6c34a\"/><path d=\"M48,74 v28 M56,74 v28 M64,74 v28 M72,74 v28\" stroke=\"#c9a83a\" stroke-width=\"2\"/></svg>", "face_sad": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"#ffd23f\"/><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"none\" stroke=\"#e6a91f\" stroke-width=\"2\"/><circle cx=\"48\" cy=\"56\" r=\"3.2\" fill=\"#5a3d08\"/><circle cx=\"72\" cy=\"56\" r=\"3.2\" fill=\"#5a3d08\"/><path d=\"M44,80 Q60,68 76,80\" stroke=\"#5a3d08\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M48,60 q-6,3 -8,8 M72,60 q6,3 8,8\" stroke=\"#5a3d08\" stroke-width=\"2\" fill=\"none\"/></svg>", "pencil": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><g transform=\"rotate(45 60 60)\"><rect x=\"40\" y=\"30\" width=\"16\" height=\"52\" fill=\"#f4c430\"/><rect x=\"40\" y=\"30\" width=\"16\" height=\"10\" fill=\"#e2603b\"/><path d=\"M40,82 l8,14 l8,-14 Z\" fill=\"#f0d9a8\"/><path d=\"M44,90 l4,6 l4,-6 Z\" fill=\"#33475e\"/></g></svg>", "face_surprised": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"#ffd23f\"/><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"none\" stroke=\"#e6a91f\" stroke-width=\"2\"/><circle cx=\"48\" cy=\"54\" r=\"6\" fill=\"#fff\"/><circle cx=\"72\" cy=\"54\" r=\"6\" fill=\"#fff\"/><circle cx=\"48\" cy=\"54\" r=\"3\" fill=\"#5a3d08\"/><circle cx=\"72\" cy=\"54\" r=\"3\" fill=\"#5a3d08\"/><circle cx=\"60\" cy=\"80\" r=\"8\" fill=\"#7a3b2a\"/></svg>", "dog": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#dff0d6\"/><ellipse cx=\"60\" cy=\"112\" rx=\"60\" ry=\"14\" fill=\"#c4e2b4\"/><ellipse cx=\"66\" cy=\"76\" rx=\"26\" ry=\"18\" fill=\"#b98a52\"/><circle cx=\"42\" cy=\"64\" r=\"15\" fill=\"#c99a62\"/><path d=\"M30,54 q-6,10 2,18 Z\" fill=\"#a9793f\"/><path d=\"M54,54 q6,10 -2,18 Z\" fill=\"#a9793f\"/><circle cx=\"38\" cy=\"64\" r=\"2.2\" fill=\"#333\"/><circle cx=\"46\" cy=\"64\" r=\"2.2\" fill=\"#333\"/><ellipse cx=\"42\" cy=\"70\" rx=\"4\" ry=\"3\" fill=\"#6b4a2a\"/><path d=\"M90,70 q12,-6 10,6\" stroke=\"#a9793f\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><line x1=\"58\" y1=\"92\" x2=\"58\" y2=\"104\" stroke=\"#a9793f\" stroke-width=\"5\"/><line x1=\"76\" y1=\"92\" x2=\"76\" y2=\"104\" stroke=\"#a9793f\" stroke-width=\"5\"/><ellipse cx=\"30\" cy=\"94\" rx=\"13\" ry=\"9\" fill=\"#c99a62\"/><circle cx=\"18\" cy=\"88\" r=\"8\" fill=\"#d9aa72\"/><path d=\"M12,82 q-3,6 1,10 Z\" fill=\"#b98a52\"/><circle cx=\"16\" cy=\"88\" r=\"1.6\" fill=\"#333\"/></svg>", "face_happy": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"#ffd23f\"/><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"none\" stroke=\"#e6a91f\" stroke-width=\"2\"/><path d=\"M42,52 q6,-6 12,0 M66,52 q6,-6 12,0\" stroke=\"#5a3d08\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M44,72 Q60,86 76,72\" stroke=\"#5a3d08\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/></svg>", "sun": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><g stroke=\"#f6b42a\" stroke-width=\"5\" stroke-linecap=\"round\"><line x1=\"60\" y1=\"60\" x2=\"110.0\" y2=\"60.0\"/><line x1=\"60\" y1=\"60\" x2=\"95.35534130076559\" y2=\"95.35533681788903\"/><line x1=\"60\" y1=\"60\" x2=\"60.00000633974483\" y2=\"109.9999999999996\"/><line x1=\"60\" y1=\"60\" x2=\"24.644667664988106\" y2=\"95.35534578364158\"/><line x1=\"60\" y1=\"60\" x2=\"10.000000000001613\" y2=\"60.000012679489664\"/><line x1=\"60\" y1=\"60\" x2=\"24.644649733483\" y2=\"24.644672147865798\"/><line x1=\"60\" y1=\"60\" x2=\"59.99998098076549\" y2=\"10.000000000003617\"/><line x1=\"60\" y1=\"60\" x2=\"95.35532336925593\" y2=\"24.644645250608136\"/></g><circle cx=\"60\" cy=\"60\" r=\"26\" fill=\"#ffd23f\"/><circle cx=\"60\" cy=\"60\" r=\"26\" fill=\"none\" stroke=\"#f6b42a\" stroke-width=\"2\"/><circle cx=\"51\" cy=\"56\" r=\"3.2\" fill=\"#6b4a12\"/><circle cx=\"69\" cy=\"56\" r=\"3.2\" fill=\"#6b4a12\"/><path d=\"M50,66 Q60,74 70,66\" stroke=\"#6b4a12\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/></svg>", "face_worried": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"#ffd23f\"/><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"none\" stroke=\"#e6a91f\" stroke-width=\"2\"/><circle cx=\"48\" cy=\"56\" r=\"3.2\" fill=\"#5a3d08\"/><circle cx=\"72\" cy=\"56\" r=\"3.2\" fill=\"#5a3d08\"/><path d=\"M46,78 q14,-6 28,2\" stroke=\"#5a3d08\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M40,44 q8,-2 14,2 M66,46 q6,-4 14,-2\" stroke=\"#5a3d08\" stroke-width=\"2.2\" fill=\"none\"/></svg>", "cat": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#dff0d6\"/><ellipse cx=\"60\" cy=\"112\" rx=\"60\" ry=\"14\" fill=\"#c4e2b4\"/><ellipse cx=\"62\" cy=\"80\" rx=\"22\" ry=\"15\" fill=\"#8a8f98\"/><path d=\"M84,80 q14,-2 8,-16\" stroke=\"#8a8f98\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"44\" cy=\"66\" r=\"15\" fill=\"#9aa0a8\"/><path d=\"M32,52 l4,14 l-12,-6 Z\" fill=\"#9aa0a8\"/><path d=\"M56,52 l-4,14 l12,-6 Z\" fill=\"#9aa0a8\"/><circle cx=\"39\" cy=\"64\" r=\"2.2\" fill=\"#333\"/><circle cx=\"49\" cy=\"64\" r=\"2.2\" fill=\"#333\"/><path d=\"M44,70 l-3,3 M44,70 l3,3\" stroke=\"#555\" stroke-width=\"1.5\"/><path d=\"M30,68 h10 M30,72 h10 M48,68 h10 M48,72 h10\" stroke=\"#cfd3d8\" stroke-width=\"1\"/><line x1=\"54\" y1=\"93\" x2=\"54\" y2=\"102\" stroke=\"#777\" stroke-width=\"4\"/><line x1=\"70\" y1=\"93\" x2=\"70\" y2=\"102\" stroke=\"#777\" stroke-width=\"4\"/></svg>", "pot": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><path d=\"M34,56 h52 l-6,40 a4,4 0 0 1 -4,4 h-28 a4,4 0 0 1 -4,-4 Z\" fill=\"#7a8189\"/><rect x=\"30\" y=\"50\" width=\"60\" height=\"8\" rx=\"4\" fill=\"#9aa0a8\"/><rect x=\"20\" y=\"50\" width=\"14\" height=\"6\" fill=\"#9aa0a8\"/><rect x=\"86\" y=\"50\" width=\"14\" height=\"6\" fill=\"#9aa0a8\"/></svg>", "pig": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#e7d3c2\"/><ellipse cx=\"60\" cy=\"112\" rx=\"60\" ry=\"12\" fill=\"#c9a98f\"/><ellipse cx=\"66\" cy=\"74\" rx=\"26\" ry=\"19\" fill=\"#f2a6b6\"/><circle cx=\"42\" cy=\"70\" r=\"15\" fill=\"#f4b1c0\"/><ellipse cx=\"36\" cy=\"70\" rx=\"7\" ry=\"6\" fill=\"#ed8ca0\"/><circle cx=\"33\" cy=\"68\" r=\"1.6\" fill=\"#7a3a4a\"/><circle cx=\"39\" cy=\"72\" r=\"1.6\" fill=\"#7a3a4a\"/><path d=\"M40,60 l-6,-8 M46,60 l4,-9\" stroke=\"#ed8ca0\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"41\" cy=\"66\" r=\"2\" fill=\"#333\"/><path d=\"M90,70 q10,-2 6,8\" stroke=\"#ed8ca0\" stroke-width=\"3\" fill=\"none\"/><line x1=\"58\" y1=\"90\" x2=\"58\" y2=\"102\" stroke=\"#ed8ca0\" stroke-width=\"5\"/><line x1=\"76\" y1=\"90\" x2=\"76\" y2=\"102\" stroke=\"#ed8ca0\" stroke-width=\"5\"/><ellipse cx=\"30\" cy=\"92\" rx=\"13\" ry=\"9\" fill=\"#f4b1c0\"/><circle cx=\"19\" cy=\"88\" r=\"7\" fill=\"#f6bccb\"/><ellipse cx=\"15\" cy=\"88\" rx=\"3.4\" ry=\"3\" fill=\"#ed8ca0\"/><circle cx=\"21\" cy=\"86\" r=\"1.4\" fill=\"#333\"/></svg>", "box": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><path d=\"M30,50 l30,-14 l30,14 v34 l-30,14 l-30,-14 Z\" fill=\"#c98a4a\"/><path d=\"M30,50 l30,14 l30,-14 M60,64 v48\" stroke=\"#a5702f\" stroke-width=\"2\" fill=\"none\"/><path d=\"M30,50 l30,14 v48 l-30,-14 Z\" fill=\"#b57a3a\"/></svg>", "sock": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><path d=\"M50,26 h20 v40 l18,14 a14,14 0 0 1 -18,22 l-20,-14 a14,14 0 0 1 0,-24 Z\" fill=\"#e2603b\"/><rect x=\"50\" y=\"26\" width=\"20\" height=\"10\" fill=\"#fff\"/></svg>", "star": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#fff\"/><polygon points=\"60.0,20.0 70.0,46.2 98.0,47.6 76.2,65.3 83.5,92.4 60.0,77.0 36.5,92.4 43.8,65.3 22.0,47.6 50.0,46.2\" fill=\"#f4a83a\"/></svg>"};
+const CARDS = [{"n": "📖", "title": "Read the story: Friends Play Together", "w": [{"k": "passage", "lines": ["Good friends like to play together. They toss a ball.", "To toss means to throw it gently. They also play tag.", "In tag, you chase and touch a friend. They run fast — they are quick!", "Friends kick, hop, and have fun together. Playing with friends makes us happy."], "cap": "Dựa theo Anchor Text “Friends” (Nina Crews) & Shared Read “Toss! Kick! Hop!” — Unit 1 Week 4."}]}, {"n": "R", "title": "Reading Comprehension — read and answer.", "w": [{"k": "choice", "q": "What is this text mostly about?", "opts": ["what friends do together", "cars", "food"], "ans": "what friends do together"}, {"k": "choice", "q": "What does the word \"toss\" mean?", "opts": ["throw it gently", "eat it", "hide it"], "ans": "throw it gently"}, {"k": "choice", "q": "In the game of tag, what do you do?", "opts": ["chase and touch a friend", "go to sleep", "read a book"], "ans": "chase and touch a friend"}, {"k": "choice", "q": "The word \"quick\" means…", "opts": ["fast", "slow", "sad"], "ans": "fast"}, {"k": "choice", "q": "How do friends feel when they play together?", "opts": ["happy", "angry", "tired"], "ans": "happy"}]}, {"n": 1, "title": "Match the word with the picture. (short o)", "w": [{"k": "select", "pool": ["dog", "box", "mop", "sock"], "ans": "mop", "img": "mop"}, {"k": "select", "pool": ["dog", "box", "mop", "sock"], "ans": "sock", "img": "sock"}, {"k": "select", "pool": ["dog", "box", "mop", "sock"], "ans": "dog", "img": "dog"}, {"k": "select", "pool": ["dog", "box", "mop", "sock"], "ans": "box", "img": "box"}]}, {"n": 2, "title": "Write the missing letter. (short o)", "w": [{"k": "input", "q": "d _ g", "ans": "o", "ph": "…", "img": "dog"}, {"k": "input", "q": "b _ x", "ans": "o", "ph": "…", "img": "box"}, {"k": "input", "q": "m _ p", "ans": "o", "ph": "…", "img": "mop"}, {"k": "input", "q": "p _ t", "ans": "o", "ph": "…", "img": "pot"}, {"k": "input", "q": "s _ ck", "ans": "o", "ph": "…", "img": "sock"}]}, {"n": 3, "title": "Does the word have the short o sound? Choose YES or NO.", "w": [{"k": "bool", "q": "dog", "ans": "YES", "set": "YN", "img": "dog"}, {"k": "bool", "q": "cat", "ans": "NO", "set": "YN", "img": "cat"}, {"k": "bool", "q": "box", "ans": "YES", "set": "YN", "img": "box"}, {"k": "bool", "q": "pig", "ans": "NO", "set": "YN", "img": "pig"}, {"k": "bool", "q": "mop", "ans": "YES", "set": "YN", "img": "mop"}, {"k": "bool", "q": "six", "ans": "NO", "set": "YN", "img": "six"}]}, {"n": 4, "title": "Middle sound", "w": [{"k": "choice", "q": "Middle sound in \"dog\"?", "opts": ["o", "a", "i"], "ans": "o", "img": "dog"}, {"k": "choice", "q": "Middle sound in \"cat\"?", "opts": ["o", "a", "i"], "ans": "a", "img": "cat"}, {"k": "choice", "q": "Middle sound in \"pig\"?", "opts": ["o", "a", "i"], "ans": "i", "img": "pig"}]}, {"n": 5, "title": "Which word has a DIFFERENT middle sound?", "w": [{"k": "choice", "q": "Which is different?", "opts": ["mop", "pot", "sit"], "ans": "sit", "img": "mop"}, {"k": "choice", "q": "Which is different?", "opts": ["box", "dog", "cat"], "ans": "cat", "img": "box"}, {"k": "choice", "q": "Which is different?", "opts": ["pot", "hot", "pig"], "ans": "pig", "img": "pot"}]}, {"n": 6, "title": "Count the sounds. Write the number.", "w": [{"k": "input", "q": "d o g", "ans": "3", "ph": "?", "img": "dog"}, {"k": "input", "q": "f l o p", "ans": "4", "ph": "?"}, {"k": "input", "q": "m o p", "ans": "3", "ph": "?", "img": "mop"}, {"k": "input", "q": "s t o p", "ans": "4", "ph": "?"}]}, {"n": 7, "title": "Fill in the blanks. High-Frequency Words.", "w": [{"k": "select", "pool": ["fun", "make", "they", "too"], "ans": "fun", "q": "School is ___ !"}, {"k": "select", "pool": ["fun", "make", "they", "too"], "ans": "make", "q": "We ___ a cake."}, {"k": "select", "pool": ["fun", "make", "they", "too"], "ans": "they", "q": "___ are my friends."}, {"k": "select", "pool": ["fun", "make", "they", "too"], "ans": "too", "q": "It is ___ hot!"}]}, {"n": 8, "title": "Choose: to / two / too.", "w": [{"k": "choice", "q": "I have __ cats.", "opts": ["two", "to", "too"], "ans": "two", "img": "six"}, {"k": "choice", "q": "I want to come, __!", "opts": ["too", "to", "two"], "ans": "too", "img": "sun"}, {"k": "choice", "q": "We go __ school.", "opts": ["to", "two", "too"], "ans": "to", "img": "book"}]}, {"n": 9, "title": "Exclamations & Interjections", "w": [{"k": "choice", "q": "Which one is an exclamation?", "opts": ["We won the game!", "I have a cat.", "Do you like it?"], "ans": "We won the game!"}, {"k": "choice", "q": "Which word is an interjection?", "opts": ["Wow!", "dog", "run"], "ans": "Wow!"}, {"k": "choice", "q": "An exclamation ends with…", "opts": ["!", ".", "a letter"], "ans": "!"}]}, {"n": 10, "title": "Choose the correct end mark: . or !", "w": [{"k": "choice", "q": "What a big dog __", "opts": ["!", "."], "ans": "!", "img": "dog"}, {"k": "choice", "q": "I like my cat __", "opts": [".", "!"], "ans": ".", "img": "cat"}, {"k": "choice", "q": "We are best friends __", "opts": ["!", "."], "ans": "!", "img": "sun"}]}, {"n": 11, "title": "Put the words in ABC order (write 1–4).", "w": [{"k": "input", "q": "ant", "ans": "1", "ph": "…"}, {"k": "input", "q": "glass", "ans": "2", "ph": "…"}, {"k": "input", "q": "jam", "ans": "3", "ph": "…"}, {"k": "input", "q": "sit", "ans": "4", "ph": "…"}]}, {"n": 12, "title": "Put the words in ABC order (write 1–3), then answer.", "w": [{"k": "input", "q": "fox", "ans": "1", "ph": "…"}, {"k": "input", "q": "lock", "ans": "2", "ph": "…"}, {"k": "input", "q": "wig", "ans": "3", "ph": "…"}, {"k": "choice", "q": "Which word comes FIRST in ABC order?", "opts": ["fox", "wig", "lock"], "ans": "fox"}]}, {"n": 13, "title": "Circle the word that RHYMES.", "w": [{"k": "choice", "q": "Rhymes with hop?", "opts": ["mop", "cat", "pig"], "ans": "mop", "img": "mop"}, {"k": "choice", "q": "Rhymes with hen?", "opts": ["ten", "dog", "sit"], "ans": "ten", "img": "cat"}, {"k": "choice", "q": "Rhymes with pig?", "opts": ["wig", "box", "sun"], "ans": "wig", "img": "pig"}, {"k": "choice", "q": "Rhymes with day?", "opts": ["way", "dog", "cat"], "ans": "way", "img": "sun"}]}, {"n": 14, "title": "Match the words that rhyme.", "w": [{"k": "select", "pool": ["ten", "jig", "way", "balloon"], "ans": "ten", "q": "hen  →"}, {"k": "select", "pool": ["ten", "jig", "way", "balloon"], "ans": "jig", "q": "pig  →"}, {"k": "select", "pool": ["ten", "jig", "way", "balloon"], "ans": "way", "q": "day  →"}, {"k": "select", "pool": ["ten", "jig", "way", "balloon"], "ans": "balloon", "q": "moon  →"}]}, {"n": 15, "title": "Poem", "w": [{"k": "choice", "q": "A poem is a text that uses…", "opts": ["rhyme and rhythm", "numbers", "maps"], "ans": "rhyme and rhythm", "img": "book"}, {"k": "choice", "q": "In \"I Am Min\", which word rhymes with ten?", "opts": ["hen", "dog", "box"], "ans": "hen", "img": "book"}]}, {"n": 16, "title": "Genre", "w": [{"k": "choice", "q": "\"Friends\" uses real photos and true facts. It is…", "opts": ["nonfiction", "a fantasy", "a poem"], "ans": "nonfiction", "img": "book"}, {"k": "choice", "q": "A story that could NOT really happen is a…", "opts": ["fantasy", "nonfiction", "fact"], "ans": "fantasy", "img": "book"}]}, {"n": 17, "title": "Do friends do this TOGETHER? Choose YES or NO.", "w": [{"k": "bool", "q": "play together", "ans": "YES", "set": "YN"}, {"k": "bool", "q": "share toys", "ans": "YES", "set": "YN"}, {"k": "bool", "q": "talk and listen", "ans": "YES", "set": "YN"}, {"k": "bool", "q": "help each other", "ans": "YES", "set": "YN"}, {"k": "bool", "q": "grab a friend's toy", "ans": "NO", "set": "YN"}, {"k": "bool", "q": "push a friend", "ans": "NO", "set": "YN"}]}, {"n": 18, "title": "Oral Vocabulary. Fill in the blanks.", "w": [{"k": "select", "pool": ["cooperate", "chore", "deliver", "collect", "relationship"], "ans": "cooperate", "q": "To work together is to ___ ."}, {"k": "select", "pool": ["cooperate", "chore", "deliver", "collect", "relationship"], "ans": "chore", "q": "A small job at home is a ___ ."}, {"k": "select", "pool": ["cooperate", "chore", "deliver", "collect", "relationship"], "ans": "deliver", "q": "To take something to someone is to ___ ."}, {"k": "select", "pool": ["cooperate", "chore", "deliver", "collect", "relationship"], "ans": "collect", "q": "To bring things together is to ___ ."}, {"k": "select", "pool": ["cooperate", "chore", "deliver", "collect", "relationship"], "ans": "relationship", "q": "How two friends get along is their ___ ."}]}, {"n": 19, "title": "Anchor Text: \"Friends\" by Nina Crews", "w": [{"k": "choice", "q": "What is \"Friends\" about?", "opts": ["what friends do together", "cars", "food"], "ans": "what friends do together", "img": "book"}, {"k": "choice", "q": "To __ a ball means to throw it gently.", "opts": ["toss", "tag", "quick"], "ans": "toss", "img": "star"}, {"k": "choice", "q": "A game where you chase and touch someone is…", "opts": ["tag", "toss", "read"], "ans": "tag", "img": "star"}]}, {"n": 20, "title": "Essential Question — write your answer.", "w": [{"k": "write", "q": "What do friends do together? Write one thing."}]}, {"n": 23, "title": "Complete the sentences. Things friends do together.", "w": [{"k": "select", "pool": ["sports", "eating", "learning", "writing", "drawing"], "ans": "sports", "q": "We do ___ like soccer and running."}, {"k": "select", "pool": ["sports", "eating", "learning", "writing", "drawing"], "ans": "eating", "q": "We enjoy ___ lunch together."}, {"k": "select", "pool": ["sports", "eating", "learning", "writing", "drawing"], "ans": "learning", "q": "We are ___ new words at school."}, {"k": "select", "pool": ["sports", "eating", "learning", "writing", "drawing"], "ans": "writing", "q": "We are ___ our names with a pencil."}, {"k": "select", "pool": ["sports", "eating", "learning", "writing", "drawing"], "ans": "drawing", "q": "We are ___ pictures with crayons."}]}, {"n": 24, "title": "Poem: \"There Are Days and There Are Days\"", "w": [{"k": "bool", "q": "The boy is happier when he is with friends.", "ans": "TRUE", "set": "TF", "img": "book"}, {"k": "bool", "q": "With a friend, jokes are funnier.", "ans": "TRUE", "set": "TF", "img": "book"}, {"k": "bool", "q": "Friends can play alone AND together.", "ans": "TRUE", "set": "TF", "img": "book"}, {"k": "bool", "q": "The boy is sad when his friends come to play.", "ans": "FALSE", "set": "TF", "img": "book"}]}, {"n": 25, "title": "Fix the writing. Choose the correct sentence.", "w": [{"k": "choice", "q": "Choose the correct sentence.", "opts": ["We won the game!", "we won the game", "we won the game!"], "ans": "We won the game!", "img": "pencil"}, {"k": "choice", "q": "Which sentence shows excitement?", "opts": ["It is so much fun!", "It is fun."], "ans": "It is so much fun!", "img": "pencil"}, {"k": "choice", "q": "Choose the correct one.", "opts": ["Wow! I like it.", "wow i like it"], "ans": "Wow! I like it.", "img": "pencil"}]}, {"n": 26, "title": "More short o words", "w": [{"k": "choice", "q": "Which word has the short o sound?", "opts": ["hop", "hat", "pig"], "ans": "hop", "img": "mop"}, {"k": "choice", "q": "Which word has the short o sound?", "opts": ["clock", "clap", "clip"], "ans": "clock", "img": "sock"}, {"k": "choice", "q": "Which word does NOT have the short o sound?", "opts": ["block", "flop", "flag"], "ans": "flag", "img": "box"}]}, {"n": 27, "title": "Topic & Details (nonfiction)", "w": [{"k": "choice", "q": "The topic of \"Friends\" is…", "opts": ["friends", "cars", "food"], "ans": "friends", "img": "book"}, {"k": "choice", "q": "A detail gives us…", "opts": ["more about the topic", "nothing"], "ans": "more about the topic", "img": "book"}, {"k": "choice", "q": "Which one is a detail about friends?", "opts": ["Friends share toys.", "A car is red."], "ans": "Friends share toys.", "img": "book"}]}, {"n": 28, "title": "\"Games Long Ago\"", "w": [{"k": "choice", "q": "Long ago, children played with…", "opts": ["marbles and jump ropes", "phones", "tablets"], "ans": "marbles and jump ropes", "img": "star"}, {"k": "choice", "q": "Long ago, children liked to fly…", "opts": ["kites", "planes"], "ans": "kites", "img": "star"}]}, {"n": 29, "title": "Look and write the whole word. (short o)", "w": [{"k": "input", "q": "", "ans": "dog", "ph": "write", "img": "dog"}, {"k": "input", "q": "", "ans": "box", "ph": "write", "img": "box"}, {"k": "input", "q": "", "ans": "mop", "ph": "write", "img": "mop"}, {"k": "input", "q": "", "ans": "pot", "ph": "write", "img": "pot"}, {"k": "input", "q": "", "ans": "sock", "ph": "write", "img": "sock"}]}, {"n": 30, "title": "Sort the words by their vowel sound.", "w": [{"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short a", "q": "cat"}, {"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short i", "q": "pig"}, {"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short o", "q": "dog"}, {"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short a", "q": "hat"}, {"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short i", "q": "six"}, {"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short o", "q": "box"}, {"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short o", "q": "mop"}, {"k": "select", "pool": ["short a", "short i", "short o"], "ans": "short i", "q": "sit"}]}, {"n": 31, "title": "Word families", "w": [{"k": "choice", "q": "Which word is in the -op family?", "opts": ["mop", "cat", "pig"], "ans": "mop", "img": "mop"}, {"k": "choice", "q": "Which word is in the -ot family?", "opts": ["pot", "pin", "bag"], "ans": "pot", "img": "pot"}, {"k": "choice", "q": "Which word rhymes with box?", "opts": ["fox", "bus", "cat"], "ans": "fox", "img": "box"}]}, {"n": 32, "title": "Blend the sounds. Write the word.", "w": [{"k": "input", "q": "/d/ /o/ /g/ =", "ans": "dog", "ph": "…"}, {"k": "input", "q": "/m/ /o/ /p/ =", "ans": "mop", "ph": "…"}, {"k": "input", "q": "/s/ /o/ /k/ =", "ans": "sock", "ph": "…"}]}, {"n": 33, "title": "Circle the FIRST sound.", "w": [{"k": "choice", "q": "First sound in \"sock\"?", "opts": ["/s/", "/o/", "/k/"], "ans": "/s/", "img": "sock"}, {"k": "choice", "q": "First sound in \"dog\"?", "opts": ["/d/", "/o/", "/g/"], "ans": "/d/", "img": "dog"}, {"k": "choice", "q": "First sound in \"mop\"?", "opts": ["/m/", "/o/", "/p/"], "ans": "/m/", "img": "mop"}]}, {"n": 34, "title": "Circle the LAST sound.", "w": [{"k": "choice", "q": "Last sound in \"dog\"?", "opts": ["/g/", "/d/", "/o/"], "ans": "/g/", "img": "dog"}, {"k": "choice", "q": "Last sound in \"pot\"?", "opts": ["/t/", "/p/", "/o/"], "ans": "/t/", "img": "pot"}, {"k": "choice", "q": "Last sound in \"sock\"?", "opts": ["/k/", "/s/", "/o/"], "ans": "/k/", "img": "sock"}]}, {"n": 35, "title": "Count the sounds. Write the number.", "w": [{"k": "input", "q": "h o p", "ans": "3", "ph": "?"}, {"k": "input", "q": "f l o p", "ans": "4", "ph": "?"}, {"k": "input", "q": "c l o c k", "ans": "4", "ph": "?"}, {"k": "input", "q": "s t o p", "ans": "4", "ph": "?"}]}, {"n": 36, "title": "How many sounds?", "w": [{"k": "choice", "q": "Which word has 4 sounds?", "opts": ["flop", "dog", "mop"], "ans": "flop", "img": "star"}, {"k": "choice", "q": "Which word has 3 sounds?", "opts": ["mop", "flop", "stop"], "ans": "mop", "img": "star"}]}, {"n": 37, "title": "Write the missing letters. (HFW)", "w": [{"k": "input", "q": "f _ n", "ans": "u", "ph": "…", "img": "star"}, {"k": "input", "q": "m _ ke", "ans": "a", "ph": "…", "img": "star"}, {"k": "input", "q": "th _ y", "ans": "e", "ph": "…", "img": "star"}, {"k": "input", "q": "t _ o", "ans": "o", "ph": "…", "img": "star"}]}, {"n": 38, "title": "Fill in the blanks. Use the words in the box.", "w": [{"k": "select", "pool": ["they", "make", "fun", "too"], "ans": "they", "q": "___ like to play."}, {"k": "select", "pool": ["they", "make", "fun", "too"], "ans": "make", "q": "We ___ a card."}, {"k": "select", "pool": ["they", "make", "fun", "too"], "ans": "fun", "q": "It is ___ to read a book."}, {"k": "select", "pool": ["they", "make", "fun", "too"], "ans": "too", "q": "Do you want to come, ___ ?"}]}, {"n": 39, "title": "Find the High-Frequency Words", "w": [{"k": "choice", "q": "How many HFW in: \"They make a fun cake\"?", "opts": ["3", "1", "0"], "ans": "3", "img": "star"}, {"k": "choice", "q": "Which word is a High-Frequency Word?", "opts": ["too", "cake", "play"], "ans": "too", "img": "star"}, {"k": "choice", "q": "___ are my friends.", "opts": ["They", "Them", "The"], "ans": "They", "img": "star"}]}, {"n": 40, "title": "Choose: to / two / too.", "w": [{"k": "choice", "q": "I have __ hands.", "opts": ["two", "to", "too"], "ans": "two", "img": "six"}, {"k": "choice", "q": "She is kind, __!", "opts": ["too", "to", "two"], "ans": "too", "img": "sun"}, {"k": "choice", "q": "Give it __ me.", "opts": ["to", "two", "too"], "ans": "to", "img": "book"}, {"k": "choice", "q": "The __ boys run.", "opts": ["two", "to", "too"], "ans": "two", "img": "six"}]}, {"n": 41, "title": "Match the interjection with the feeling.", "w": [{"k": "select", "pool": ["I am happy!", "I feel surprised!", "I made a mistake!", "That hurt!"], "ans": "I feel surprised!", "q": "Wow!", "img": "face_surprised"}, {"k": "select", "pool": ["I am happy!", "I feel surprised!", "I made a mistake!", "That hurt!"], "ans": "That hurt!", "q": "Ouch!", "img": "face_sad"}, {"k": "select", "pool": ["I am happy!", "I feel surprised!", "I made a mistake!", "That hurt!"], "ans": "I am happy!", "q": "Yay!", "img": "face_happy"}, {"k": "select", "pool": ["I am happy!", "I feel surprised!", "I made a mistake!", "That hurt!"], "ans": "I made a mistake!", "q": "Oops!", "img": "face_worried"}]}, {"n": 42, "title": "Choose the end mark: . ? or !", "w": [{"k": "choice", "q": "Are you my friend __", "opts": ["?", ".", "!"], "ans": "?", "img": "star"}, {"k": "choice", "q": "I am so happy __", "opts": ["!", ".", "?"], "ans": "!", "img": "star"}, {"k": "choice", "q": "We read books __", "opts": [".", "!", "?"], "ans": ".", "img": "star"}]}, {"n": 43, "title": "Circle the sentence that is an EXCLAMATION.", "w": [{"k": "choice", "q": "Which is an exclamation?", "opts": ["We won the big game!", "We play games.", "Do you play?"], "ans": "We won the big game!"}, {"k": "choice", "q": "Which is an exclamation?", "opts": ["What a nice day!", "It is a nice day."], "ans": "What a nice day!"}, {"k": "choice", "q": "Which is an exclamation?", "opts": ["I love my friends!", "I have friends."], "ans": "I love my friends!"}]}, {"n": 44, "title": "Circle the INTERJECTION.", "w": [{"k": "choice", "q": "Find the interjection.", "opts": ["Wow!", "dog", "run"], "ans": "Wow!"}, {"k": "choice", "q": "Find the interjection.", "opts": ["Hooray!", "book", "sit"], "ans": "Hooray!"}, {"k": "choice", "q": "Find the interjection.", "opts": ["Oops!", "cat", "play"], "ans": "Oops!"}]}, {"n": 45, "title": "Put the words in ABC order (write 1–5).", "w": [{"k": "input", "q": "cat", "ans": "3", "ph": "…"}, {"k": "input", "q": "ant", "ans": "1", "ph": "…"}, {"k": "input", "q": "dog", "ans": "4", "ph": "…"}, {"k": "input", "q": "egg", "ans": "5", "ph": "…"}, {"k": "input", "q": "bee", "ans": "2", "ph": "…"}]}, {"n": 46, "title": "Which word comes FIRST in ABC order?", "w": [{"k": "choice", "q": "they or too?", "opts": ["they", "too"], "ans": "they"}, {"k": "choice", "q": "fox or fun?", "opts": ["fox", "fun"], "ans": "fox"}, {"k": "choice", "q": "mop or top?", "opts": ["mop", "top"], "ans": "mop"}]}, {"n": 47, "title": "Alphabet", "w": [{"k": "choice", "q": "Which letter comes AFTER M?", "opts": ["N", "L", "P"], "ans": "N"}, {"k": "choice", "q": "Which letter comes BEFORE D?", "opts": ["C", "E", "F"], "ans": "C"}, {"k": "choice", "q": "Which comes first in the alphabet?", "opts": ["a", "g", "b"], "ans": "a"}]}, {"n": 48, "title": "Circle the word that RHYMES.", "w": [{"k": "choice", "q": "Rhymes with dog?", "opts": ["fog", "cat", "pin"], "ans": "fog", "img": "dog"}, {"k": "choice", "q": "Rhymes with cat?", "opts": ["fat", "dog", "sun"], "ans": "fat", "img": "cat"}, {"k": "choice", "q": "Rhymes with fed?", "opts": ["bed", "fun", "pig"], "ans": "bed", "img": "star"}, {"k": "choice", "q": "Rhymes with night?", "opts": ["kite", "dog", "cat"], "ans": "kite", "img": "star"}]}, {"n": 49, "title": "Read the poem. Choose the correct answer.", "w": [{"k": "choice", "q": "In 'A big dog sat on a log', which two words rhyme?", "opts": ["dog and log", "big and on"], "ans": "dog and log", "img": "book"}, {"k": "choice", "q": "In 'The fat cat sat on a mat', which words rhyme?", "opts": ["fat, cat, sat, mat", "the, on, a"], "ans": "fat, cat, sat, mat", "img": "book"}]}, {"n": 50, "title": "Match the words that rhyme.", "w": [{"k": "select", "pool": ["bed", "fat", "balloon", "kite"], "ans": "fat", "q": "cat  →"}, {"k": "select", "pool": ["bed", "fat", "balloon", "kite"], "ans": "kite", "q": "night  →"}, {"k": "select", "pool": ["bed", "fat", "balloon", "kite"], "ans": "balloon", "q": "moon  →"}, {"k": "select", "pool": ["bed", "fat", "balloon", "kite"], "ans": "bed", "q": "fed  →"}]}, {"n": 51, "title": "Fiction or Nonfiction?", "w": [{"k": "choice", "q": "A book with real photos and true facts is…", "opts": ["nonfiction", "a fantasy"], "ans": "nonfiction", "img": "book"}, {"k": "choice", "q": "A story about a talking, flying pig is…", "opts": ["a fantasy", "nonfiction"], "ans": "a fantasy", "img": "book"}, {"k": "choice", "q": "Which one could REALLY happen?", "opts": ["Friends play at school", "A dog drives a bus"], "ans": "Friends play at school", "img": "book"}]}, {"n": 52, "title": "Topic & Details", "w": [{"k": "choice", "q": "The topic is PETS. Which one is a detail?", "opts": ["Some pets are cats.", "The bus is yellow."], "ans": "Some pets are cats.", "img": "book"}, {"k": "choice", "q": "A detail tells us more about the…", "opts": ["topic", "weather"], "ans": "topic", "img": "book"}, {"k": "choice", "q": "Photos in a nonfiction book…", "opts": ["give real information", "are pretend"], "ans": "give real information", "img": "book"}]}, {"n": 53, "title": "Stories: \"Toss! Kick! Hop!\" & \"Friends\"", "w": [{"k": "choice", "q": "In \"Toss! Kick! Hop!\", what do the friends do?", "opts": ["play games together", "go to sleep"], "ans": "play games together", "img": "star"}, {"k": "choice", "q": "To \"toss\" a ball means to…", "opts": ["throw it", "eat it"], "ans": "throw it", "img": "star"}, {"k": "choice", "q": "\"Tag\" is a game where you…", "opts": ["chase and touch", "read a book"], "ans": "chase and touch", "img": "star"}]}, {"n": 54, "title": "Writing — answer in 2 sentences.", "w": [{"k": "write", "q": "What do you and your friend like to do together? Why is it fun?"}]}];
+const KEY = "week4quiz_v1";
+let state = {};
+try{ state = JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ state = {}; }
+let checked = false;
+
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function norm(s){ return (s==null?"":String(s)).toLowerCase().trim().replace(/\s+/g,""); }
+function tile(k){ return SVGS[k] ? '<span class="tile">'+SVGS[k]+'</span>' : ''; }
+
+function widgetId(ci,wi){ return "q"+CARDS[ci].n+"_"+wi; }
+
+function render(){
+  const quiz = document.getElementById("quiz");
+  quiz.innerHTML = "";
+  CARDS.forEach((c,ci)=>{
+    const blue = ci%2===1;
+    const card = document.createElement("div");
+    card.className = "card"+(blue?" blue":"");
+    let h = '<div class="chead"><div class="num">'+c.n+'</div><div class="ctitle">'+c.title+'</div></div>';
+    if(c.note) h += '<p class="sub" style="margin:0 0 8px">'+c.note+'</p>';
+    c.w.forEach((w,wi)=>{ h += '<div class="w" id="wrap_'+widgetId(ci,wi)+'">'+renderWidget(c,ci,w,wi)+'</div>'; });
+    card.innerHTML = h;
+    quiz.appendChild(card);
+  });
+  bind();
+  updateHud();
+}
+
+function renderWidget(c,ci,w,wi){
+  const id = widgetId(ci,wi);
+  const cur = state[id];
+  const img = w.img ? tile(w.img) : "";
+  if(w.k==="choice"){
+    const q = w.q ? '<span class="wtext">'+w.q+'</span>' : '';
+    let opts = w.opts.map(o=>'<button class="opt'+(cur===o?' sel':'')+'" data-id="'+id+'" data-val="'+esc(o)+'">'+o+'</button>').join('');
+    return '<div class="wq">'+img+q+'</div><div class="opts" id="opts_'+id+'">'+opts+'</div>';
+  }
+  if(w.k==="bool"){
+    const set = w.set==="YN" ? ["YES","NO"] : ["TRUE","FALSE"];
+    const q = '<span class="wtext">'+w.q+'</span>';
+    let opts = set.map(o=>'<button class="opt'+(cur===o?' sel':'')+'" data-id="'+id+'" data-val="'+o+'">'+o+'</button>').join('');
+    return '<div class="wq">'+img+q+'</div><div class="opts" id="opts_'+id+'">'+opts+'</div>';
+  }
+  if(w.k==="input"){
+    const lab = w.q ? '<span class="letters">'+w.q+'</span>' : '';
+    const wide = (w.ans && w.ans.length>2) ? ' wide':'';
+    return '<div class="wq">'+img+'<span class="field" id="field_'+id+'">'+lab+
+      ' <input class="txt'+wide+'" id="'+id+'" data-id="'+id+'" value="'+esc(cur||"")+'" placeholder="'+(w.ph||"")+'" autocomplete="off"><span class="markslot"></span></span></div>';
+  }
+  if(w.k==="select"){
+    const q = w.q ? '<span class="wtext">'+w.q+'</span>' : '';
+    let opts = '<option value="">— choose —</option>'+w.pool.map(o=>'<option value="'+esc(o)+'"'+(cur===o?' selected':'')+'>'+o+'</option>').join('');
+    return '<div class="wq">'+img+q+'<span class="field" id="field_'+id+'"><select class="sel" id="'+id+'" data-id="'+id+'">'+opts+'</select><span class="markslot"></span></span></div>';
+  }
+  if(w.k==="passage"){
+    let ls=w.lines.map(l=>'<p>'+l+'</p>').join('');
+    let cap=w.cap?'<div class="pcap">'+w.cap+'</div>':'';
+    return '<div class="passage">'+ls+cap+'</div>';
+  }
+  if(w.k==="write"){
+    return '<div class="wq"><span class="wtext">'+w.q+'</span></div><textarea class="write" data-id="'+id+'" placeholder="Viết câu trả lời của em…">'+esc(cur||"")+'</textarea>';
+  }
+  return "";
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+
+function bind(){
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(checked) return;
+      const id=b.dataset.id, val=b.dataset.val;
+      state[id]=val; save();
+      document.querySelectorAll('#opts_'+CSS.escape(id)+' .opt, [id="opts_'+id+'"] .opt').forEach(x=>x.classList.remove("sel"));
+      document.querySelectorAll('.opt[data-id="'+id+'"]').forEach(x=>x.classList.toggle("sel", x.dataset.val===val));
+      updateHud();
+    });
+  });
+  document.querySelectorAll("input.txt, select.sel, textarea.write").forEach(el=>{
+    const ev = el.tagName==="SELECT" ? "change":"input";
+    el.addEventListener(ev,()=>{ if(checked && el.tagName!=="TEXTAREA") return; state[el.dataset.id]=el.value; save(); updateHud(); });
+  });
+}
+
+function gradable(){ let t=[]; CARDS.forEach((c,ci)=>c.w.forEach((w,wi)=>{ if(w.k!=="write" && w.k!=="passage") t.push({id:widgetId(ci,wi),w}); })); return t; }
+function answeredCount(){ return gradable().filter(g=>{ const v=state[g.id]; return v!==undefined && v!=="" && v!==null; }).length; }
+
+function updateHud(){
+  const all=gradable(); const ans=answeredCount();
+  document.getElementById("bar").style.width = Math.round(ans/all.length*100)+"%";
+  if(!checked) document.getElementById("chip").textContent = ans+" / "+all.length+" đã làm";
+}
+
+function check(){
+  const all=gradable(); let correct=0;
+  all.forEach(g=>{
+    const w=g.w, id=g.id, val=state[id];
+    let ok=false;
+    if(w.k==="input"){ const acc=(w.accept||[w.ans]).map(norm); ok=acc.includes(norm(val)); }
+    else ok = (val!==undefined && String(val)===String(w.ans));
+    if(ok) correct++;
+    markWidget(g, ok);
+  });
+  checked=true;
+  const pct=Math.round(correct/all.length*100);
+  document.getElementById("chip").textContent = correct+" / "+all.length+" đúng";
+  showResult(pct, correct, all.length);
+  document.getElementById("check").style.display="none";
+  document.getElementById("msg").textContent="Cuộn lên xem đáp án nhé!";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function markWidget(g, ok){
+  const w=g.w, id=g.id;
+  if(w.k==="choice"||w.k==="bool"){
+    document.querySelectorAll('.opt[data-id="'+id+'"]').forEach(b=>{
+      b.classList.remove("sel");
+      if(String(b.dataset.val)===String(w.ans)) b.classList.add("good");
+      else if(b.dataset.val===state[id]) b.classList.add("bad");
+      b.style.pointerEvents="none";
+    });
+  } else {
+    const field=document.getElementById("field_"+id);
+    const el=document.getElementById(id);
+    if(el) el.disabled=true;
+    if(field){
+      field.classList.add(ok?"good":"bad");
+      const slot=field.querySelector(".markslot");
+      if(slot){ slot.innerHTML = ok ? '<span class="mark good">✓</span>' :
+        '<span class="mark bad">✗</span> <span class="correct">'+w.ans+'</span>'; }
+    }
+  }
+}
+
+function showResult(pct, correct, total){
+  const r=document.getElementById("result"); r.classList.add("show");
+  document.getElementById("rscore").textContent = pct+"%";
+  const nstars = pct>=90?5:pct>=75?4:pct>=60?3:pct>=40?2:1;
+  document.getElementById("rstars").textContent = "⭐".repeat(nstars)+"☆".repeat(5-nstars);
+  let m = pct>=90?"Xuất sắc! Em giỏi quá! 🎉" : pct>=75?"Làm tốt lắm! 👏" :
+          pct>=50?"Cố lên, em làm được! 💪" : "Mình cùng ôn lại nhé! 🌱";
+  document.getElementById("rmsg").textContent = m + "  ("+correct+"/"+total+")";
+}
+
+function reset(){
+  state={}; checked=false; save();
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("check").style.display="";
+  document.getElementById("msg").textContent="";
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.getElementById("hi").innerHTML = (SVGS["face_happy"]||"") + (SVGS["star"]||"") + (SVGS["face_surprised"]||"");
+document.getElementById("check").addEventListener("click",check);
+document.getElementById("reset").addEventListener("click",reset);
+render();
+</script>
+
+</body></html>

@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Week 4 Review Day Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+img{max-width:100%}
+:root{
+  --bg:#eef5ea; --card:#ffffff; --ink:#233a2a; --muted:#6f8374; --line:#d7e6cd;
+  --green:#3f9440; --green-d:#2f7a33; --green-soft:#eaf5e6;
+  --blue:#2b6fb0; --blue-soft:#eaf2fb; --blue-line:#cfe0f2;
+  --yellow:#e0a92e; --yellow-soft:#fdf3d2;
+  --red:#e2603b; --good:#3f9440; --bad:#e14b3b;
+  --ring:rgba(63,148,64,.35);
+  --shadow:0 2px 0 rgba(0,0,0,.04),0 8px 24px rgba(40,80,45,.08);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101a14; --card:#18271e; --ink:#e7f1e6; --muted:#93a898; --line:#284034;
+  --green:#6cc06a; --green-d:#7fd07c; --green-soft:#173021;
+  --blue:#77b6e6; --blue-soft:#132633; --blue-line:#274a63;
+  --yellow:#e9bf59; --yellow-soft:#2a2413;
+  --red:#f0795a; --good:#6cc06a; --bad:#f0795a; --ring:rgba(108,192,106,.4);
+  --shadow:0 2px 0 rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --bg:#101a14; --card:#18271e; --ink:#e7f1e6; --muted:#93a898; --line:#284034;
+  --green:#6cc06a; --green-d:#7fd07c; --green-soft:#173021;
+  --blue:#77b6e6; --blue-soft:#132633; --blue-line:#274a63;
+  --yellow:#e9bf59; --yellow-soft:#2a2413;
+  --red:#f0795a; --good:#6cc06a; --bad:#f0795a; --ring:rgba(108,192,106,.4);
+  --shadow:0 2px 0 rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Nunito",system-ui,Segoe UI,sans-serif;font-size:17px;line-height:1.5;}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 140px;}
+
+header{position:relative;text-align:center;padding:30px 12px 10px;}
+.badge-pill{display:inline-block;background:var(--green);color:#fff;font-family:"Fredoka";font-weight:600;
+  font-size:13px;letter-spacing:.5px;padding:5px 14px;border-radius:999px;}
+h1{font-family:"Fredoka";font-weight:700;font-size:clamp(26px,6vw,40px);margin:12px 0 4px;color:var(--ink);
+  text-wrap:balance;line-height:1.05;}
+.sub{color:var(--muted);font-weight:600;margin:0;}
+.hi{display:flex;justify-content:center;gap:6px;margin:14px 0 0;}
+.hi svg{width:56px;height:56px}
+
+.hud{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:blur(8px);padding:10px 0;margin-bottom:8px;}
+.hud-in{max-width:760px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px;}
+.bar{flex:1;height:12px;border-radius:999px;background:var(--line);overflow:hidden;}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#8ec63f);
+  border-radius:999px;transition:width .35s ease;}
+.scorechip{font-family:"Fredoka";font-weight:600;font-size:14px;color:var(--green-d);
+  background:var(--green-soft);border:1.5px solid var(--line);padding:5px 12px;border-radius:999px;white-space:nowrap;}
+
+.sectionband{font-family:"Fredoka";font-weight:700;color:#fff;border-radius:16px;
+  padding:14px 20px;margin:22px 0 10px;background:linear-gradient(90deg,var(--blue),#5aa9d6);
+  box-shadow:var(--shadow);}
+.sectionband .t{font-size:18px;letter-spacing:.3px;display:block;}
+.sectionband .s{font-size:13px;font-weight:600;opacity:.92;display:block;margin-top:3px;}
+
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px 18px 20px;
+  margin:16px 0;box-shadow:var(--shadow);}
+.card.blue{border-color:var(--blue-line);}
+.chead{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.num{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--green);color:#fff;
+  font-family:"Fredoka";font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.card.blue .num{background:var(--blue);}
+.ctitle{font-family:"Fredoka";font-weight:600;font-size:19px;line-height:1.15;text-wrap:balance;}
+
+.w{padding:10px 0;border-top:1px dashed var(--line);}
+.w:first-of-type{border-top:0;}
+.wq{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.tile{flex:0 0 auto;width:60px;height:60px;border-radius:12px;background:var(--green-soft);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.card.blue .tile{background:var(--blue-soft);}
+.tile svg{width:56px;height:56px;display:block;}
+.wtext{font-weight:700;font-size:17px;flex:1;min-width:160px;}
+.letters{font-family:"Fredoka";letter-spacing:3px;font-weight:600;font-size:20px;}
+
+.opts{display:flex;flex-wrap:wrap;gap:8px;}
+.opt{font-family:"Nunito";font-weight:700;font-size:16px;color:var(--ink);background:var(--card);
+  border:2px solid var(--line);border-radius:12px;padding:9px 16px;cursor:pointer;transition:transform .08s,border-color .15s,background .15s;
+  min-height:44px;}
+.opt:hover{border-color:var(--green);}
+.opt:active{transform:translateY(1px) scale(.99);}
+.opt.sel{background:var(--blue-soft);border-color:var(--blue);color:var(--blue);}
+.opt.good{background:var(--green-soft);border-color:var(--good);color:var(--green-d);}
+.opt.bad{background:color-mix(in srgb,var(--red) 14%,var(--card));border-color:var(--bad);color:var(--bad);}
+.opt:focus-visible{outline:3px solid var(--ring);outline-offset:2px;}
+
+input.txt,select.sel{font-family:"Fredoka";font-weight:600;font-size:18px;color:var(--ink);background:var(--card);
+  border:2px solid var(--line);border-radius:12px;padding:8px 12px;min-height:44px;}
+input.txt{width:96px;text-align:center;}
+input.txt.wide{width:170px;}
+select.sel{cursor:pointer;min-width:150px;}
+input.txt:focus,select.sel:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);}
+.mark{font-family:"Fredoka";font-weight:700;margin-left:8px;font-size:16px;}
+.mark.good{color:var(--good);}
+.mark.bad{color:var(--bad);}
+.correct{display:inline-block;margin-left:8px;font-weight:700;color:var(--green-d);}
+.field.good input,.field.good select{border-color:var(--good);background:var(--green-soft);}
+.field.bad input,.field.bad select{border-color:var(--bad);background:color-mix(in srgb,var(--red) 12%,var(--card));}
+.field{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px;}
+.passage{background:var(--green-soft);border:2px solid var(--line);border-radius:14px;padding:14px 18px;font-size:16px;}
+.passage p{margin:6px 0;}
+.pcap{font-size:12px;color:var(--muted);font-style:italic;margin-top:8px;}
+textarea.write{width:100%;min-height:88px;font-family:"Nunito";font-size:16px;color:var(--ink);
+  background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:12px;resize:vertical;}
+textarea.write:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);}
+
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--card) 92%,transparent);
+  backdrop-filter:blur(10px);border-top:2px solid var(--line);padding:12px 16px;}
+.footer-in{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.btn{font-family:"Fredoka";font-weight:600;font-size:18px;border:0;border-radius:14px;padding:12px 26px;cursor:pointer;
+  min-height:52px;transition:transform .08s,filter .15s;}
+.btn:active{transform:translateY(1px) scale(.99);}
+.btn-main{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-d);}
+.btn-main:hover{filter:brightness(1.05);}
+.btn-ghost{background:transparent;color:var(--muted);border:2px solid var(--line);}
+.msg{font-family:"Fredoka";font-weight:600;color:var(--green-d);font-size:16px;}
+
+.result{display:none;text-align:center;background:var(--card);border:2px solid var(--line);border-radius:20px;
+  padding:22px;margin:16px 0;box-shadow:var(--shadow);}
+.result.show{display:block;animation:pop .4s ease;}
+.result .big{font-family:"Fredoka";font-weight:700;font-size:40px;color:var(--green-d);}
+.result .stars{font-size:34px;letter-spacing:4px;margin:6px 0;}
+.result .rmsg{font-family:"Fredoka";font-weight:600;font-size:22px;margin-top:4px;}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.foot-note{text-align:center;color:var(--muted);font-size:13px;margin:6px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="hud">
+  <div class="hud-in">
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scorechip" id="chip">0 / 0</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <span class="badge-pill">ENGLISH · GRADE 1A4</span>
+    <h1>Let's Be Friends — Review Day</h1>
+    <p class="sub">Unit 1 · Week 4 · Main Content + Extra Practice (1A3) + Bonus (cả tuần 18/08–28/08)</p>
+    <div class="hi" id="hi"></div>
+  </header>
+
+  <div class="result" id="result">
+    <div class="big" id="rscore">0%</div>
+    <div class="stars" id="rstars">⭐</div>
+    <div class="rmsg" id="rmsg"></div>
+  </div>
+
+  <div id="quiz"></div>
+  <p class="foot-note">Word search (bài 9), poll bạn bè (bài 17) và vẽ tranh (bài 22) là hoạt động thực tế — làm trong bản in PDF.</p>
+</div>
+
+<div class="footer">
+  <div class="footer-in">
+    <button class="btn btn-main" id="check">Kiểm tra bài làm ✅</button>
+    <button class="btn btn-ghost" id="reset">Làm lại 🔄</button>
+    <span class="msg" id="msg"></span>
+  </div>
+</div>
+
+<script>
+const SVGS = {
+  "star": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#fff\"/><polygon points=\"60,20 70,46.2 98,47.6 76.2,65.3 83.5,92.4 60,77 36.5,92.4 43.8,65.3 22,47.6 50,46.2\" fill=\"#f4a83a\"/></svg>",
+  "book": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"120\" fill=\"#eef2f6\"/><path d=\"M30,34 h26 a4,4 0 0 1 4,4 v52 a4,4 0 0 0 -4,-4 h-26 Z\" fill=\"#5aa9d6\"/><path d=\"M90,34 h-26 a4,4 0 0 0 -4,4 v52 a4,4 0 0 1 4,-4 h26 Z\" fill=\"#3f9440\"/><rect x=\"58\" y=\"34\" width=\"4\" height=\"56\" fill=\"#33475e\"/></svg>",
+  "face_happy": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"#ffd23f\"/><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"none\" stroke=\"#e6a91f\" stroke-width=\"2\"/><path d=\"M42,52 q6,-6 12,0 M66,52 q6,-6 12,0\" stroke=\"#5a3d08\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M44,72 Q60,86 76,72\" stroke=\"#5a3d08\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/></svg>",
+  "face_surprised": "<svg viewBox=\"0 0 120 120\" width=\"118\" height=\"118\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"#ffd23f\"/><circle cx=\"60\" cy=\"60\" r=\"42\" fill=\"none\" stroke=\"#e6a91f\" stroke-width=\"2\"/><circle cx=\"48\" cy=\"54\" r=\"6\" fill=\"#fff\"/><circle cx=\"72\" cy=\"54\" r=\"6\" fill=\"#fff\"/><circle cx=\"48\" cy=\"54\" r=\"3\" fill=\"#5a3d08\"/><circle cx=\"72\" cy=\"54\" r=\"3\" fill=\"#5a3d08\"/><circle cx=\"60\" cy=\"80\" r=\"8\" fill=\"#7a3b2a\"/></svg>"
+};
+
+const CARDS = [
+{"n":1,"title":"Circle the ENDING sound.","w":[
+  {"k":"choice","q":"What is the ending sound of \"hop\"?","opts":["/p/","/g/","/t/"],"ans":"/p/","img":"star"},
+  {"k":"choice","q":"What is the ending sound of \"top\"?","opts":["/p/","/t/","/g/"],"ans":"/p/","img":"star"},
+  {"k":"choice","q":"What is the ending sound of \"log\"?","opts":["/g/","/p/","/t/"],"ans":"/g/","img":"star"}
+]},
+{"n":2,"title":"Circle the ENDING sound.","w":[
+  {"k":"choice","q":"What is the ending sound of \"hog\"?","opts":["/g/","/t/","/p/"],"ans":"/g/","img":"star"},
+  {"k":"choice","q":"What is the ending sound of \"hot\"?","opts":["/t/","/p/","/g/"],"ans":"/t/","img":"star"},
+  {"k":"choice","q":"What is the ending sound of \"lot\"?","opts":["/t/","/g/","/p/"],"ans":"/t/","img":"star"}
+]},
+{"n":3,"title":"Circle the ENDING sound / HFW check.","w":[
+  {"k":"choice","q":"What is the ending sound of \"flip\"?","opts":["/p/","/t/","/g/"],"ans":"/p/","img":"star"},
+  {"k":"choice","q":"What is the ending sound of \"black\"?","opts":["/k/","/t/","/g/"],"ans":"/k/","img":"star"},
+  {"k":"choice","q":"Which word is a High-Frequency Word (read by sight, not by sound)?","opts":["they","hop","top"],"ans":"they","img":"star"}
+]},
+{"n":4,"title":"Which word ends with the SAME sound?","w":[
+  {"k":"choice","q":"Which word ends with the SAME sound as \"hop\"?","opts":["top","log","hot"],"ans":"top","img":"star"},
+  {"k":"choice","q":"Which word ends with the SAME sound as \"log\"?","opts":["hog","hot","flip"],"ans":"hog","img":"star"},
+  {"k":"choice","q":"Which word ends with the SAME sound as \"hot\"?","opts":["lot","hop","log"],"ans":"lot","img":"star"}
+]},
+{"n":5,"title":"Circle the BEGINNING blend.","w":[
+  {"k":"choice","q":"What is the beginning blend of \"sled\"?","opts":["sl","st","dr"],"ans":"sl","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"stick\"?","opts":["st","sl","cr"],"ans":"st","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"drill\"?","opts":["dr","cr","fr"],"ans":"dr","img":"star"}
+]},
+{"n":6,"title":"Circle the BEGINNING blend.","w":[
+  {"k":"choice","q":"What is the beginning blend of \"crab\"?","opts":["cr","dr","bl"],"ans":"cr","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"fry\"?","opts":["fr","cr","dr"],"ans":"fr","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"slug\"?","opts":["sl","st","fr"],"ans":"sl","img":"star"}
+]},
+{"n":7,"title":"Circle the BEGINNING blend.","w":[
+  {"k":"choice","q":"What is the beginning blend of \"frog\"?","opts":["fr","dr","cr"],"ans":"fr","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"black\"?","opts":["bl","cr","st"],"ans":"bl","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"star\"?","opts":["st","sl","dr"],"ans":"st","img":"star"}
+]},
+{"n":8,"title":"Blend the sounds. Write the word.","w":[
+  {"k":"input","q":"/s/ /l/ /e/ /d/ =","ans":"sled","ph":"…"},
+  {"k":"input","q":"/k/ /r/ /a/ /b/ =","ans":"crab","ph":"…"},
+  {"k":"input","q":"/f/ /r/ /o/ /g/ =","ans":"frog","ph":"…"},
+  {"k":"input","q":"/s/ /t/ /a/ /r/ =","ans":"star","ph":"…"}
+]},
+{"n":10,"title":"Match the words that RHYME.","w":[
+  {"k":"select","pool":["log","hat","jar","train","sled"],"ans":"hat","q":"cat  →"},
+  {"k":"select","pool":["log","hat","jar","train","sled"],"ans":"log","q":"frog  →"},
+  {"k":"select","pool":["log","hat","jar","train","sled"],"ans":"train","q":"rain  →"},
+  {"k":"select","pool":["log","hat","jar","train","sled"],"ans":"sled","q":"bed  →"},
+  {"k":"select","pool":["log","hat","jar","train","sled"],"ans":"jar","q":"star  →"}
+]},
+{"n":11,"title":"Circle the word that RHYMES.","w":[
+  {"k":"choice","q":"Which word rhymes with \"jar\"?","opts":["star","dog","cat"],"ans":"star","img":"star"},
+  {"k":"choice","q":"Which word rhymes with \"train\"?","opts":["rain","sun","pig"],"ans":"rain","img":"star"},
+  {"k":"choice","q":"Which word rhymes with \"sled\"?","opts":["bed","box","fun"],"ans":"bed","img":"star"}
+]},
+{"n":12,"title":"Circle the INTERJECTION in the sentence.","w":[
+  {"k":"choice","q":"Wow! That is so cool.","opts":["Wow!","That","cool"],"ans":"Wow!","img":"star"},
+  {"k":"choice","q":"Oops! I dropped it.","opts":["Oops!","dropped","it"],"ans":"Oops!","img":"star"},
+  {"k":"choice","q":"Yay! We won!","opts":["Yay!","won","We"],"ans":"Yay!","img":"star"}
+]},
+{"n":13,"title":"Sort the words into the correct category.","w":[
+  {"k":"select","pool":["Actions","People","Places"],"ans":"Actions","q":"help"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"Actions","q":"share"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"Actions","q":"play"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"People","q":"friend"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"People","q":"brother"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"People","q":"teacher"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"Places","q":"park"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"Places","q":"school"},
+  {"k":"select","pool":["Actions","People","Places"],"ans":"Places","q":"home"}
+]},
+{"n":14,"title":"Oral Vocabulary. Fill in the blanks.","w":[
+  {"k":"select","pool":["cooperate","relationship","deliver","collect","chore"],"ans":"cooperate","q":"To work together with friends to get something done is to ___ ."},
+  {"k":"select","pool":["cooperate","relationship","deliver","collect","chore"],"ans":"relationship","q":"A connection you have with somebody, like your friends, is a ___ ."},
+  {"k":"select","pool":["cooperate","relationship","deliver","collect","chore"],"ans":"deliver","q":"To take something to somebody is to ___ it."},
+  {"k":"select","pool":["cooperate","relationship","deliver","collect","chore"],"ans":"collect","q":"To gather things together is to ___ them."},
+  {"k":"select","pool":["cooperate","relationship","deliver","collect","chore"],"ans":"chore","q":"A small job you have to do is a ___ ."}
+]},
+{"n":15,"title":"Same first letter — order by the 2ND letter. Write 1, 2, 3.","w":[
+  {"k":"input","q":"hog","ans":"1","ph":"…"},
+  {"k":"input","q":"hop","ans":"2","ph":"…"},
+  {"k":"input","q":"hot","ans":"3","ph":"…"}
+]},
+{"n":16,"title":"Circle the word that comes FIRST in ABC order.","w":[
+  {"k":"choice","q":"Which comes first?","opts":["they","too"],"ans":"they","img":"star"},
+  {"k":"choice","q":"Which comes first?","opts":["mop","top"],"ans":"mop","img":"star"},
+  {"k":"choice","q":"Which comes first?","opts":["hog","hot"],"ans":"hog","img":"star"}
+]},
+{"n":17,"title":"Research — Do your own poll!","w":[
+  {"k":"write","q":"Ask 3 friends: What is your favorite game to play with friends? Write their names and answers, then say which game got the most votes."}
+]},
+{"n":18,"title":"Topic & Details. Circle the correct answer.","w":[
+  {"k":"choice","q":"What is the topic of \"Friends\"?","opts":["friends","cars","food"],"ans":"friends","img":"book"},
+  {"k":"choice","q":"Which sentence is a DETAIL about friends?","opts":["Friends share toys.","A car is red."],"ans":"Friends share toys.","img":"book"}
+]},
+{"n":19,"title":"Reading Poetry. Circle the correct answer.","w":[
+  {"k":"choice","q":"When a line of a poem ends, a reader should…","opts":["pause a little","shout","stop reading"],"ans":"pause a little","img":"book"},
+  {"k":"choice","q":"Which of these uses rhyme AND line breaks?","opts":["a poem","a phone book"],"ans":"a poem","img":"book"}
+]},
+{"n":20,"title":"Fluency & Genre. Circle the correct answer.","w":[
+  {"k":"choice","q":"Reading words quickly and correctly, without mistakes, is called…","opts":["accuracy and automaticity","drawing","singing"],"ans":"accuracy and automaticity","img":"book"},
+  {"k":"choice","q":"\"Toss! Kick! Hop!\" gives real facts about games. It is…","opts":["nonfiction","a fantasy"],"ans":"nonfiction","img":"book"}
+]},
+{"n":21,"title":"Writing. Answer in complete sentences.","w":[
+  {"k":"write","q":"1. Write about a chore you do to help at home."},
+  {"k":"write","q":"2. Write about a game you like to play with friends."}
+]},
+{"divider":true,"title":"⭐ EXTRA PRACTICE","sub":"Nội dung bổ trợ — tham khảo Class Diary 1A3 (không phải chương trình chính của 1A4)"},
+{"n":23,"title":"ADD the sound to the BEGINNING. Write the new word.","w":[
+  {"k":"input","q":"ring + b (at the start) =","ans":"bring","ph":"…"},
+  {"k":"input","q":"pot + s (at the start) =","ans":"spot","ph":"…"},
+  {"k":"input","q":"pin + s (at the start) =","ans":"spin","ph":"…"}
+]},
+{"n":24,"title":"ADD the sound to the END. Write the new word.","w":[
+  {"k":"input","q":"goal + d (at the end) =","ans":"gold","ph":"…"},
+  {"k":"input","q":"bun + ch (at the end) =","ans":"bunch","ph":"…"}
+]},
+{"n":25,"title":"TAKE AWAY the sound. Write the word that is left.","w":[
+  {"k":"input","q":"Say \"bring\" without /b/.","ans":"ring","ph":"…"},
+  {"k":"input","q":"Say \"spot\" without /s/.","ans":"pot","ph":"…"},
+  {"k":"input","q":"Say \"spin\" without /s/.","ans":"pin","ph":"…"}
+]},
+{"n":26,"title":"Sort the words by their word family.","w":[
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-op","q":"mop"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-ot","q":"pot"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-og/-ox","q":"dog"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-op","q":"hop"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-ot","q":"hot"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-og/-ox","q":"log"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-op","q":"top"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-og/-ox","q":"hog"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-ot","q":"lot"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-og/-ox","q":"fox"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-og/-ox","q":"box"},
+  {"k":"select","pool":["-op","-ot","-og/-ox"],"ans":"-op","q":"cop"}
+]},
+{"n":27,"title":"Write the missing letter.","w":[
+  {"k":"input","q":"m _ p","ans":"o","ph":"…"},
+  {"k":"input","q":"p _ t","ans":"o","ph":"…"}
+]},
+{"n":28,"title":"How do you spell it? Write the missing letter.","w":[
+  {"k":"input","q":"It means very warm outside. h _ t","ans":"o","ph":"…"},
+  {"k":"input","q":"A police officer is sometimes called a… c _ p","ans":"o","ph":"…"}
+]},
+{"n":29,"title":"School Rules! Write 1–10 to put the words in ABC order.","w":[
+  {"k":"input","q":"books","ans":"1","ph":"…"},
+  {"k":"input","q":"friends","ans":"2","ph":"…"},
+  {"k":"input","q":"fun","ans":"3","ph":"…"},
+  {"k":"input","q":"lunch","ans":"4","ph":"…"},
+  {"k":"input","q":"math","ans":"5","ph":"…"},
+  {"k":"input","q":"recess","ans":"6","ph":"…"},
+  {"k":"input","q":"school","ans":"7","ph":"…"},
+  {"k":"input","q":"students","ans":"8","ph":"…"},
+  {"k":"input","q":"teacher","ans":"9","ph":"…"},
+  {"k":"input","q":"work","ans":"10","ph":"…"}
+]},
+{"n":30,"title":"Same first letter — order by the 2ND letter. Write 1–5.","w":[
+  {"k":"input","q":"lake","ans":"1","ph":"…"},
+  {"k":"input","q":"leaf","ans":"2","ph":"…"},
+  {"k":"input","q":"like","ans":"3","ph":"…"},
+  {"k":"input","q":"lose","ans":"4","ph":"…"},
+  {"k":"input","q":"luck","ans":"5","ph":"…"}
+]},
+{"n":31,"title":"Same first letter — order by the 2ND letter. Write 1–5.","w":[
+  {"k":"input","q":"apple","ans":"3","ph":"…"},
+  {"k":"input","q":"am","ans":"2","ph":"…"},
+  {"k":"input","q":"awake","ans":"5","ph":"…"},
+  {"k":"input","q":"alarm","ans":"1","ph":"…"},
+  {"k":"input","q":"ask","ans":"4","ph":"…"}
+]},
+{"n":32,"title":"Same first letter — order by the 2ND letter. Write 1–5.","w":[
+  {"k":"input","q":"bike","ans":"3","ph":"…"},
+  {"k":"input","q":"bake","ans":"1","ph":"…"},
+  {"k":"input","q":"bunk","ans":"5","ph":"…"},
+  {"k":"input","q":"blue","ans":"4","ph":"…"},
+  {"k":"input","q":"bent","ans":"2","ph":"…"}
+]},
+{"n":33,"title":"Is it a STATEMENT, QUESTION, or EXCLAMATION?","w":[
+  {"k":"choice","q":"\"We are friends.\"","opts":["Statement","Question","Exclamation"],"ans":"Statement","img":"star"},
+  {"k":"choice","q":"\"Are you my friend?\"","opts":["Question","Statement","Exclamation"],"ans":"Question","img":"star"},
+  {"k":"choice","q":"\"We won the game!\"","opts":["Exclamation","Statement","Question"],"ans":"Exclamation","img":"star"}
+]},
+{"n":34,"title":"Is it a STATEMENT, QUESTION, or EXCLAMATION?","w":[
+  {"k":"choice","q":"\"I like to play.\"","opts":["Statement","Question","Exclamation"],"ans":"Statement","img":"star"},
+  {"k":"choice","q":"\"Do you like to play?\"","opts":["Question","Statement","Exclamation"],"ans":"Question","img":"star"},
+  {"k":"choice","q":"\"What a great day!\"","opts":["Exclamation","Statement","Question"],"ans":"Exclamation","img":"star"}
+]},
+{"n":35,"title":"Choose the correct end mark: . ? or !","w":[
+  {"k":"choice","q":"I have a cat __","opts":[".","?","!"],"ans":".","img":"star"},
+  {"k":"choice","q":"Do you like it __","opts":["?",".","!"],"ans":"?","img":"star"},
+  {"k":"choice","q":"We won __","opts":["!",".","?"],"ans":"!","img":"star"}
+]},
+{"n":36,"title":"Real-life examples. Circle the correct word.","w":[
+  {"k":"choice","q":"A postman does this to letters and parcels.","opts":["deliver","collect","chore"],"ans":"deliver","img":"star"},
+  {"k":"choice","q":"Gathering Pokémon cards is called…","opts":["collect","deliver","chore"],"ans":"collect","img":"star"},
+  {"k":"choice","q":"Sweeping the floor at home is a…","opts":["chore","relationship","cooperate"],"ans":"chore","img":"star"}
+]},
+{"divider":true,"title":"🎁 BONUS","sub":"Nhặt từ toàn bộ tuần Unit 1 Week 4 (18/08–28/08) — nội dung chưa có ở các mục trên"},
+{"n":"B1","title":"Middle Sound & Categorization.","w":[
+  {"k":"choice","q":"Which word does NOT belong? mop, cob, sit","opts":["sit","mop","cob"],"ans":"sit","img":"star"},
+  {"k":"choice","q":"Middle sound in \"cob\"?","opts":["o","a","i"],"ans":"o","img":"star"}
+]},
+{"n":"B2","title":"Phoneme Segmentation. Count the sounds.","w":[
+  {"k":"input","q":"flop = how many sounds?","ans":"4","ph":"?"},
+  {"k":"input","q":"block = how many sounds?","ans":"4","ph":"?"},
+  {"k":"input","q":"clock = how many sounds?","ans":"4","ph":"?"},
+  {"k":"input","q":"plot = how many sounds?","ans":"4","ph":"?"}
+]},
+{"n":"B3","title":"More Blends (new words). Circle the beginning blend.","w":[
+  {"k":"choice","q":"What is the beginning blend of \"slid\"?","opts":["sl","cl","gl"],"ans":"sl","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"glad\"?","opts":["gl","cl","pl"],"ans":"gl","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"plate\"?","opts":["pl","cl","fl"],"ans":"pl","img":"star"},
+  {"k":"choice","q":"What is the beginning blend of \"cloud\"?","opts":["cl","sl","fl"],"ans":"cl","img":"star"}
+]},
+{"n":"B4","title":"Short-o words in \"Toss! Kick! Hop!\". Which one does NOT have the short o sound?","w":[
+  {"k":"choice","q":"Which word does NOT have the short o sound?","opts":["cat","block","dolls"],"ans":"cat","img":"book"},
+  {"k":"choice","q":"Which word does NOT have the short o sound?","opts":["six","hop","flop"],"ans":"six","img":"book"}
+]},
+{"n":"B5","title":"Interactive read-aloud: \"Games Long Ago\".","w":[
+  {"k":"choice","q":"A toy car made from a wooden crate was called a…","opts":["soap box car","race car","robot car"],"ans":"soap box car","img":"star"},
+  {"k":"choice","q":"A small glass ball children played with was called a…","opts":["marble","block","sock"],"ans":"marble","img":"star"},
+  {"k":"choice","q":"Long ago, children liked to fly…","opts":["kites","drones","planes"],"ans":"kites","img":"star"},
+  {"k":"choice","q":"A toy you jump over using a looped string is a…","opts":["jump rope","kite","marble"],"ans":"jump rope","img":"star"}
+]},
+{"n":"B6","title":"Rhyme (new pairs from 24/08).","w":[
+  {"k":"choice","q":"Which word rhymes with \"cat\"?","opts":["fat","dog","sun"],"ans":"fat","img":"star"},
+  {"k":"choice","q":"Which word rhymes with \"fed\"?","opts":["instead","fun","box"],"ans":"instead","img":"star"}
+]},
+{"n":"B7","title":"Poem \"I Am Min\" — match the rhymes.","w":[
+  {"k":"select","pool":["ten","jig","spin"],"ans":"ten","q":"hen  →"},
+  {"k":"select","pool":["ten","jig","spin"],"ans":"jig","q":"pig  →"},
+  {"k":"select","pool":["ten","jig","spin"],"ans":"spin","q":"Min  →"}
+]},
+{"n":"B8","title":"Poem \"The Bat\" — match the rhymes.","w":[
+  {"k":"select","pool":["way","squeaks","balloon","kite"],"ans":"way","q":"day  →"},
+  {"k":"select","pool":["way","squeaks","balloon","kite"],"ans":"squeaks","q":"clicks  →"},
+  {"k":"select","pool":["way","squeaks","balloon","kite"],"ans":"balloon","q":"moon  →"},
+  {"k":"select","pool":["way","squeaks","balloon","kite"],"ans":"kite","q":"night  →"}
+]},
+{"n":"B9","title":"Poem \"There Are Days and There Are Days\".","w":[
+  {"k":"choice","q":"In the poem, when the boy has a friend, jokes become…","opts":["funnier","sadder","quieter"],"ans":"funnier","img":"book"},
+  {"k":"choice","q":"Which silly word shows things feel extra sweet with a friend?","opts":["honey-er","colder","darker"],"ans":"honey-er","img":"book"},
+  {"k":"choice","q":"Friends can play alone AND together.","opts":["TRUE","FALSE"],"ans":"TRUE","img":"book"}
+]},
+{"n":"B10","title":"Anchor Text \"Friends\" — vocabulary deep dive.","w":[
+  {"k":"choice","q":"To \"toss\" a ball means to…","opts":["throw it gently","kick it hard","hide it"],"ans":"throw it gently","img":"book"},
+  {"k":"choice","q":"\"Tag\" is a game where you…","opts":["chase and touch a friend","take a nap","read a book"],"ans":"chase and touch a friend","img":"book"},
+  {"k":"choice","q":"The word \"quick\" means…","opts":["fast","slow","sad"],"ans":"fast","img":"book"}
+]},
+{"n":"B11","title":"Draft Model — fix the writing.","w":[
+  {"k":"choice","q":"Choose the correctly written sentence.","opts":["We won the game!","we won the game"],"ans":"We won the game!","img":"star"},
+  {"k":"choice","q":"Which one correctly shows excitement?","opts":["Wow! That is amazing!","wow that is amazing"],"ans":"Wow! That is amazing!","img":"star"}
+]},
+{"n":"B12","title":"Build Vocabulary — things friends do together.","w":[
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"sports","q":"We do ___ like soccer and running."},
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"eating","q":"We enjoy ___ lunch together."},
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"learning","q":"We are ___ new words at school."},
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"writing","q":"We are ___ our names with a pencil."},
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"drawing","q":"We are ___ pictures with crayons."},
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"talking","q":"We like ___ about our day."},
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"sharing","q":"We are ___ our toys."},
+  {"k":"select","pool":["eating","drawing","playing","talking","learning","writing","sports","sharing"],"ans":"playing","q":"We are ___ tag at recess."}
+]},
+{"n":"B13","title":"ABC order. Write 1–4.","w":[
+  {"k":"input","q":"ant","ans":"1","ph":"…"},
+  {"k":"input","q":"glass","ans":"2","ph":"…"},
+  {"k":"input","q":"jam","ans":"3","ph":"…"},
+  {"k":"input","q":"sit","ans":"4","ph":"…"}
+]},
+{"n":"B14","title":"HFW dictation sentences. Fill in the blanks.","w":[
+  {"k":"select","pool":["fun","make","they","too"],"ans":"fun","q":"School is ___ !"},
+  {"k":"select","pool":["fun","make","they","too"],"ans":"make","q":"We ___ cake."},
+  {"k":"select","pool":["fun","make","they","too"],"ans":"they","q":"___ are friends."},
+  {"k":"select","pool":["fun","make","they","too"],"ans":"too","q":"It's ___ hot!"}
+]}
+];
+
+const KEY = "week4reviewday_v1";
+let state = {};
+try{ state = JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ state = {}; }
+let checked = false;
+
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function norm(s){ return (s==null?"":String(s)).toLowerCase().trim().replace(/\s+/g,""); }
+function tile(k){ return SVGS[k] ? '<span class="tile">'+SVGS[k]+'</span>' : ''; }
+
+function widgetId(ci,wi){ return "q"+CARDS[ci].n+"_"+wi; }
+
+function render(){
+  const quiz = document.getElementById("quiz");
+  quiz.innerHTML = "";
+  let colorToggle = 0;
+  CARDS.forEach((c,ci)=>{
+    if(c.divider){
+      const div = document.createElement("div");
+      div.className = "sectionband";
+      div.innerHTML = '<span class="t">'+c.title+'</span><span class="s">'+c.sub+'</span>';
+      quiz.appendChild(div);
+      return;
+    }
+    const blue = colorToggle%2===1; colorToggle++;
+    const card = document.createElement("div");
+    card.className = "card"+(blue?" blue":"");
+    let h = '<div class="chead"><div class="num">'+c.n+'</div><div class="ctitle">'+c.title+'</div></div>';
+    c.w.forEach((w,wi)=>{ h += '<div class="w" id="wrap_'+widgetId(ci,wi)+'">'+renderWidget(c,ci,w,wi)+'</div>'; });
+    card.innerHTML = h;
+    quiz.appendChild(card);
+  });
+  bind();
+  updateHud();
+}
+
+function renderWidget(c,ci,w,wi){
+  const id = widgetId(ci,wi);
+  const cur = state[id];
+  const img = w.img ? tile(w.img) : "";
+  if(w.k==="choice"){
+    const q = w.q ? '<span class="wtext">'+w.q+'</span>' : '';
+    let opts = w.opts.map(o=>'<button class="opt'+(cur===o?' sel':'')+'" data-id="'+id+'" data-val="'+esc(o)+'">'+o+'</button>').join('');
+    return '<div class="wq">'+img+q+'</div><div class="opts" id="opts_'+id+'">'+opts+'</div>';
+  }
+  if(w.k==="input"){
+    const lab = w.q ? '<span class="letters">'+w.q+'</span>' : '';
+    const wide = (w.ans && w.ans.length>2) ? ' wide':'';
+    return '<div class="wq">'+img+'<span class="field" id="field_'+id+'">'+lab+
+      ' <input class="txt'+wide+'" id="'+id+'" data-id="'+id+'" value="'+esc(cur||"")+'" placeholder="'+(w.ph||"")+'" autocomplete="off"><span class="markslot"></span></span></div>';
+  }
+  if(w.k==="select"){
+    const q = w.q ? '<span class="wtext">'+w.q+'</span>' : '';
+    let opts = '<option value="">— choose —</option>'+w.pool.map(o=>'<option value="'+esc(o)+'"'+(cur===o?' selected':'')+'>'+o+'</option>').join('');
+    return '<div class="wq">'+img+q+'<span class="field" id="field_'+id+'"><select class="sel" id="'+id+'" data-id="'+id+'">'+opts+'</select><span class="markslot"></span></span></div>';
+  }
+  if(w.k==="write"){
+    return '<div class="wq"><span class="wtext">'+w.q+'</span></div><textarea class="write" data-id="'+id+'" placeholder="Viết câu trả lời của em…">'+esc(cur||"")+'</textarea>';
+  }
+  return "";
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+
+function bind(){
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(checked) return;
+      const id=b.dataset.id, val=b.dataset.val;
+      state[id]=val; save();
+      document.querySelectorAll('.opt[data-id="'+id+'"]').forEach(x=>x.classList.toggle("sel", x.dataset.val===val));
+      updateHud();
+    });
+  });
+  document.querySelectorAll("input.txt, select.sel, textarea.write").forEach(el=>{
+    const ev = el.tagName==="SELECT" ? "change":"input";
+    el.addEventListener(ev,()=>{ if(checked && el.tagName!=="TEXTAREA") return; state[el.dataset.id]=el.value; save(); updateHud(); });
+  });
+}
+
+function gradable(){ let t=[]; CARDS.forEach((c,ci)=>{ if(c.divider) return; c.w.forEach((w,wi)=>{ if(w.k!=="write") t.push({id:widgetId(ci,wi),w}); }); }); return t; }
+function answeredCount(){ return gradable().filter(g=>{ const v=state[g.id]; return v!==undefined && v!=="" && v!==null; }).length; }
+
+function updateHud(){
+  const all=gradable(); const ans=answeredCount();
+  document.getElementById("bar").style.width = Math.round(ans/all.length*100)+"%";
+  if(!checked) document.getElementById("chip").textContent = ans+" / "+all.length+" đã làm";
+}
+
+function check(){
+  const all=gradable(); let correct=0;
+  all.forEach(g=>{
+    const w=g.w, id=g.id, val=state[id];
+    let ok=false;
+    if(w.k==="input"){ const acc=(w.accept||[w.ans]).map(norm); ok=acc.includes(norm(val)); }
+    else ok = (val!==undefined && String(val)===String(w.ans));
+    if(ok) correct++;
+    markWidget(g, ok);
+  });
+  checked=true;
+  const pct=Math.round(correct/all.length*100);
+  document.getElementById("chip").textContent = correct+" / "+all.length+" đúng";
+  showResult(pct, correct, all.length);
+  document.getElementById("check").style.display="none";
+  document.getElementById("msg").textContent="Cuộn lên xem đáp án nhé!";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function markWidget(g, ok){
+  const w=g.w, id=g.id;
+  if(w.k==="choice"){
+    document.querySelectorAll('.opt[data-id="'+id+'"]').forEach(b=>{
+      b.classList.remove("sel");
+      if(String(b.dataset.val)===String(w.ans)) b.classList.add("good");
+      else if(b.dataset.val===state[id]) b.classList.add("bad");
+      b.style.pointerEvents="none";
+    });
+  } else {
+    const field=document.getElementById("field_"+id);
+    const el=document.getElementById(id);
+    if(el) el.disabled=true;
+    if(field){
+      field.classList.add(ok?"good":"bad");
+      const slot=field.querySelector(".markslot");
+      if(slot){ slot.innerHTML = ok ? '<span class="mark good">✓</span>' :
+        '<span class="mark bad">✗</span> <span class="correct">'+w.ans+'</span>'; }
+    }
+  }
+}
+
+function showResult(pct, correct, total){
+  const r=document.getElementById("result"); r.classList.add("show");
+  document.getElementById("rscore").textContent = pct+"%";
+  const nstars = pct>=90?5:pct>=75?4:pct>=60?3:pct>=40?2:1;
+  document.getElementById("rstars").textContent = "⭐".repeat(nstars)+"☆".repeat(5-nstars);
+  let m = pct>=90?"Xuất sắc! Em giỏi quá! 🎉" : pct>=75?"Làm tốt lắm! 👏" :
+          pct>=50?"Cố lên, em làm được! 💪" : "Mình cùng ôn lại nhé! 🌱";
+  document.getElementById("rmsg").textContent = m + "  ("+correct+"/"+total+")";
+}
+
+function reset(){
+  state={}; checked=false; save();
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("check").style.display="";
+  document.getElementById("msg").textContent="";
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.getElementById("hi").innerHTML = (SVGS["face_happy"]||"") + (SVGS["star"]||"") + (SVGS["face_surprised"]||"");
+document.getElementById("check").addEventListener("click",check);
+document.getElementById("reset").addEventListener("click",reset);
+render();
+</script>
+
+</body></html>

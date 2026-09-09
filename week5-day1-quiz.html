@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 1 Week 5 Quiz - How Does Your Body Move?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef5ea; --card:#ffffff; --ink:#233a2a; --muted:#6f8374; --line:#d7e6cd;
+  --green:#3f9440; --green-d:#2f7a33; --green-soft:#eaf5e6;
+  --blue:#2b6fb0; --blue-soft:#eaf2fb; --blue-line:#cfe0f2;
+  --yellow:#e0a92e; --yellow-soft:#fdf3d2;
+  --red:#e2603b; --good:#3f9440; --bad:#e14b3b;
+  --ring:rgba(63,148,64,.35);
+  --shadow:0 2px 0 rgba(0,0,0,.04),0 8px 24px rgba(40,80,45,.08);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101a14; --card:#18271e; --ink:#e7f1e6; --muted:#93a898; --line:#284034;
+  --green:#6cc06a; --green-d:#7fd07c; --green-soft:#173021;
+  --blue:#77b6e6; --blue-soft:#132633; --blue-line:#274a63;
+  --yellow:#e9bf59; --yellow-soft:#2a2413;
+  --red:#f0795a; --good:#6cc06a; --bad:#f0795a; --ring:rgba(108,192,106,.4);
+  --shadow:0 2px 0 rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --bg:#101a14; --card:#18271e; --ink:#e7f1e6; --muted:#93a898; --line:#284034;
+  --green:#6cc06a; --green-d:#7fd07c; --green-soft:#173021;
+  --blue:#77b6e6; --blue-soft:#132633; --blue-line:#274a63;
+  --yellow:#e9bf59; --yellow-soft:#2a2413;
+  --red:#f0795a; --good:#6cc06a; --bad:#f0795a; --ring:rgba(108,192,106,.4);
+  --shadow:0 2px 0 rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Nunito",system-ui,Segoe UI,sans-serif;font-size:17px;line-height:1.5;}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 140px;}
+
+header{position:relative;text-align:center;padding:30px 12px 10px;}
+.badge-pill{display:inline-block;background:var(--green);color:#fff;font-family:"Fredoka";font-weight:600;
+  font-size:13px;letter-spacing:.5px;padding:5px 14px;border-radius:999px;}
+h1{font-family:"Fredoka";font-weight:700;font-size:clamp(26px,6vw,40px);margin:12px 0 4px;color:var(--ink);
+  text-wrap:balance;line-height:1.05;}
+.sub{color:var(--muted);font-weight:600;margin:0;}
+
+.hud{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:blur(8px);padding:10px 0;margin-bottom:8px;}
+.hud-in{max-width:760px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px;}
+.bar{flex:1;height:12px;border-radius:999px;background:var(--line);overflow:hidden;}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#8ec63f);
+  border-radius:999px;transition:width .35s ease;}
+.scorechip{font-family:"Fredoka";font-weight:600;font-size:14px;color:var(--green-d);
+  background:var(--green-soft);border:1.5px solid var(--line);padding:5px 12px;border-radius:999px;white-space:nowrap;}
+
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px 18px 20px;
+  margin:16px 0;box-shadow:var(--shadow);}
+.card.blue{border-color:var(--blue-line);}
+.chead{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.num{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--green);color:#fff;
+  font-family:"Fredoka";font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.card.blue .num{background:var(--blue);}
+.ctitle{font-family:"Fredoka";font-weight:600;font-size:18px;line-height:1.15;text-wrap:balance;}
+.cnote{margin:0 0 10px 50px;color:var(--muted);font-size:13px;font-style:italic;}
+
+.w{padding:10px 0;border-top:1px dashed var(--line);}
+.w:first-of-type{border-top:0;}
+.wq{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.wtext{font-weight:700;font-size:17px;flex:1;min-width:160px;}
+
+.opts{display:flex;flex-wrap:wrap;gap:8px;}
+.opt{font-family:"Nunito";font-weight:700;font-size:16px;color:var(--ink);background:var(--card);
+  border:2px solid var(--line);border-radius:12px;padding:9px 16px;cursor:pointer;transition:transform .08s,border-color .15s,background .15s;
+  min-height:44px;}
+.opt:hover{border-color:var(--green);}
+.opt:active{transform:translateY(1px) scale(.99);}
+.opt.sel{background:var(--blue-soft);border-color:var(--blue);color:var(--blue);}
+.opt.good{background:var(--green-soft);border-color:var(--good);color:var(--green-d);}
+.opt.bad{background:color-mix(in srgb,var(--red) 14%,var(--card));border-color:var(--bad);color:var(--bad);}
+.opt:focus-visible{outline:3px solid var(--ring);outline-offset:2px;}
+
+input.txt,select.sel{font-family:"Fredoka";font-weight:600;font-size:18px;color:var(--ink);background:var(--card);
+  border:2px solid var(--line);border-radius:12px;padding:8px 12px;min-height:44px;}
+input.txt{width:120px;text-align:center;}
+input.txt.wide{width:170px;}
+select.sel{cursor:pointer;min-width:150px;}
+input.txt:focus,select.sel:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);}
+.mark{font-family:"Fredoka";font-weight:700;margin-left:8px;font-size:16px;}
+.mark.good{color:var(--good);}
+.mark.bad{color:var(--bad);}
+.correct{display:inline-block;margin-left:8px;font-weight:700;color:var(--green-d);}
+.field.good input,.field.good select{border-color:var(--good);background:var(--green-soft);}
+.field.bad input,.field.bad select{border-color:var(--bad);background:color-mix(in srgb,var(--red) 12%,var(--card));}
+.field{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px;}
+textarea.write{width:100%;min-height:88px;font-family:"Nunito";font-size:16px;color:var(--ink);
+  background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:12px;resize:vertical;}
+textarea.write:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);}
+
+.footer{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--card) 92%,transparent);
+  backdrop-filter:blur(10px);border-top:2px solid var(--line);padding:12px 16px;}
+.footer-in{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.btn{font-family:"Fredoka";font-weight:600;font-size:18px;border:0;border-radius:14px;padding:12px 26px;cursor:pointer;
+  min-height:52px;transition:transform .08s,filter .15s;}
+.btn:active{transform:translateY(1px) scale(.99);}
+.btn-main{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-d);}
+.btn-main:hover{filter:brightness(1.05);}
+.btn-ghost{background:transparent;color:var(--muted);border:2px solid var(--line);}
+.msg{font-family:"Fredoka";font-weight:600;color:var(--green-d);font-size:16px;}
+
+.result{display:none;text-align:center;background:var(--card);border:2px solid var(--line);border-radius:20px;
+  padding:22px;margin:16px 0;box-shadow:var(--shadow);}
+.result.show{display:block;animation:pop .4s ease;}
+.result .big{font-family:"Fredoka";font-weight:700;font-size:40px;color:var(--green-d);}
+.result .stars{font-size:34px;letter-spacing:4px;margin:6px 0;}
+.result .rmsg{font-family:"Fredoka";font-weight:600;font-size:22px;margin-top:4px;}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.foot-note{text-align:center;color:var(--muted);font-size:13px;margin:6px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="hud">
+  <div class="hud-in">
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scorechip" id="chip">0 / 0</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <span class="badge-pill">ENGLISH · GRADE 1A4</span>
+    <h1>How Does Your Body Move?</h1>
+    <p class="sub">Unit 1 · Week 5 (07/09/2026) — Vocabulary · Oral Vocabulary · Phonics · Bonus</p>
+  </header>
+
+  <div class="result" id="result">
+    <div class="big" id="rscore">0%</div>
+    <div class="stars" id="rstars">⭐</div>
+    <div class="rmsg" id="rmsg"></div>
+  </div>
+
+  <div id="quiz"></div>
+  <p class="foot-note">Word search giấy (bonus, không tính điểm) có trong bản in PDF: Tests/tháng 9/01_LanguageArts_Unit1Week5_Day1.pdf</p>
+</div>
+
+<div class="footer">
+  <div class="footer-in">
+    <button class="btn btn-main" id="check">Kiểm tra bài làm ✅</button>
+    <button class="btn btn-ghost" id="reset">Làm lại 🔄</button>
+    <span class="msg" id="msg"></span>
+  </div>
+</div>
+
+<script>
+const CARDS = [{"n": 1, "title": "VOCABULARY (1/6) — What does this word mean?", "w": [{"k": "choice", "q": "To hit something with your foot is to…", "opts": ["kick", "throw", "clap"], "ans": "kick"}, {"k": "choice", "q": "To push off the ground and go up in the air is to…", "opts": ["jump", "walk", "sit"], "ans": "jump"}, {"k": "choice", "q": "To move by putting one foot in front of the other is to…", "opts": ["walk", "run", "spin"], "ans": "walk"}, {"k": "choice", "q": "To move your arms or body backward and forward is to…", "opts": ["swing", "throw", "flip"], "ans": "swing"}, {"k": "choice", "q": "To move very fast using your legs is to…", "opts": ["run", "walk", "climb"], "ans": "run"}, {"k": "choice", "q": "To turn around and around quickly is to…", "opts": ["spin", "stretch", "bounce"], "ans": "spin"}], "note": "Unit 1 Week 5 — “Ways Our Bodies Move”"}, {"n": 2, "title": "VOCABULARY (2/6) — What does this word mean?", "w": [{"k": "choice", "q": "To turn your body over, like a somersault, is to…", "opts": ["flip", "jump", "kick"], "ans": "flip"}, {"k": "choice", "q": "To reach your arms or legs out to make them longer is to…", "opts": ["stretch", "spin", "throw"], "ans": "stretch"}, {"k": "choice", "q": "To move up and down again and again, like a ball, is to…", "opts": ["bounce", "flip", "climb"], "ans": "bounce"}, {"k": "choice", "q": "To send something through the air with your hand is to…", "opts": ["throw", "kick", "swing"], "ans": "throw"}, {"k": "choice", "q": "To use your hands and feet to go up something is to…", "opts": ["climb", "run", "jump"], "ans": "climb"}]}, {"n": 3, "title": "VOCABULARY (3/6) — Fill in the blank.", "w": [{"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "kick", "q": "I like to ___ the ball into the goal."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "jump", "q": "Can you ___ over this rope?"}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "walk", "q": "We ___ home from school together."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "swing", "q": "___ your arms like this before you exercise."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "run", "q": "She can ___ faster than her brother."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "spin", "q": "The dancer can ___ on one foot."}]}, {"n": 4, "title": "VOCABULARY (4/6) — Fill in the blank.", "w": [{"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "flip", "q": "He did a ___ on the trampoline."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "stretch", "q": "___ your legs before you run a race."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "bounce", "q": "Watch the ball ___ on the floor."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "throw", "q": "___ the ball to your friend."}, {"k": "select", "pool": ["kick", "jump", "walk", "swing", "run", "spin", "flip", "stretch", "bounce", "throw", "climb"], "ans": "climb", "q": "The cat can ___ up a tall tree."}]}, {"n": 5, "title": "VOCABULARY + BODY PARTS (5/6) — Which body part do you use?", "w": [{"k": "choice", "q": "Which body part do you use most to KICK a ball?", "opts": ["foot", "hand", "ear"], "ans": "foot"}, {"k": "choice", "q": "Which body part do you use most to THROW a ball?", "opts": ["hand", "foot", "nose"], "ans": "hand"}, {"k": "choice", "q": "Which body parts do you use to WALK?", "opts": ["legs and feet", "hands", "ears"], "ans": "legs and feet"}, {"k": "choice", "q": "Which body parts do you use to RUN?", "opts": ["legs", "arms only", "mouth"], "ans": "legs"}, {"k": "choice", "q": "Which body parts do you use to JUMP?", "opts": ["legs", "hands only", "hair"], "ans": "legs"}, {"k": "choice", "q": "Which body parts do you use to CLIMB?", "opts": ["hands and feet", "ears", "eyes"], "ans": "hands and feet"}], "note": "Kết hợp Vocabulary với bộ phận cơ thể — giúp bé nhớ TỪ + Ý NGHĨA cùng lúc."}, {"n": 6, "title": "VOCABULARY + BODY PARTS (6/6) — Which body part do you use?", "w": [{"k": "choice", "q": "When you SPIN, what moves?", "opts": ["your whole body", "only your nose", "only your hair"], "ans": "your whole body"}, {"k": "choice", "q": "When you SWING your arms, which body part moves?", "opts": ["arms", "legs", "ears"], "ans": "arms"}, {"k": "choice", "q": "When you STRETCH, what do you reach out?", "opts": ["your arms and legs", "your eyes", "your teeth"], "ans": "your arms and legs"}, {"k": "choice", "q": "When you FLIP like a somersault, what moves?", "opts": ["your whole body", "only your finger", "only your tongue"], "ans": "your whole body"}, {"k": "choice", "q": "Which body part do you use to BOUNCE a ball?", "opts": ["hand", "foot", "elbow"], "ans": "hand"}]}, {"n": 7, "title": "ORAL VOCABULARY — exercise · physical", "w": [{"k": "choice", "q": "Doing something active to keep your body healthy is called…", "opts": ["exercise", "homework", "lunch"], "ans": "exercise"}, {"k": "choice", "q": "The word that means “about your body” is…", "opts": ["physical", "funny", "hungry"], "ans": "physical"}, {"k": "select", "pool": ["exercise", "physical"], "ans": "physical", "q": "Running and swimming are ___ activities."}, {"k": "select", "pool": ["exercise", "physical"], "ans": "exercise", "q": "Riding your bike every day is a good ___ ."}, {"k": "bool", "q": "Reading a book quietly is exercise.", "ans": "FALSE", "set": "TF"}, {"k": "bool", "q": "Jumping rope is a physical activity.", "ans": "TRUE", "set": "TF"}], "note": "Companion Book — Oral Vocabulary, 07/09/2026"}, {"n": 8, "title": "PHONICS — Write the missing blend (2 letters).", "w": [{"k": "input", "q": "__og  (a small green animal that hops)", "ans": "fr", "ph": "…"}, {"k": "input", "q": "__ick  (to poke with a long thin thing)", "ans": "st", "ph": "…"}, {"k": "input", "q": "__ab  (a sea animal that walks sideways)", "ans": "cr", "ph": "…"}, {"k": "input", "q": "__in  (to turn around and around — a Vocabulary word too!)", "ans": "sp", "ph": "…"}, {"k": "input", "q": "__ab  (to take something quickly with your hand)", "ans": "gr", "ph": "…"}, {"k": "input", "q": "__im  (to move through water)", "ans": "sw", "ph": "…"}], "note": "Video r-blends & s-blends, 07/09/2026"}, {"n": 9, "title": "PHONICS — Circle R-blend or S-blend (1/2).", "w": [{"k": "choice", "q": "frog", "opts": ["R-blend", "S-blend"], "ans": "R-blend"}, {"k": "choice", "q": "stick", "opts": ["R-blend", "S-blend"], "ans": "S-blend"}, {"k": "choice", "q": "grab", "opts": ["R-blend", "S-blend"], "ans": "R-blend"}, {"k": "choice", "q": "swim", "opts": ["R-blend", "S-blend"], "ans": "S-blend"}, {"k": "choice", "q": "drag", "opts": ["R-blend", "S-blend"], "ans": "R-blend"}]}, {"n": 10, "title": "PHONICS — Circle R-blend or S-blend (2/2).", "w": [{"k": "choice", "q": "snack", "opts": ["R-blend", "S-blend"], "ans": "S-blend"}, {"k": "choice", "q": "trot", "opts": ["R-blend", "S-blend"], "ans": "R-blend"}, {"k": "choice", "q": "skin", "opts": ["R-blend", "S-blend"], "ans": "S-blend"}, {"k": "choice", "q": "crib", "opts": ["R-blend", "S-blend"], "ans": "R-blend"}, {"k": "choice", "q": "stack", "opts": ["R-blend", "S-blend"], "ans": "S-blend"}]}, {"n": 11, "title": "PHONICS — Which word has the blend sound at the start?", "w": [{"k": "choice", "q": "Which word has a blend?", "opts": ["rag", "drag"], "ans": "drag"}, {"k": "choice", "q": "Which word has a blend?", "opts": ["sack", "stack"], "ans": "stack"}], "note": "“Fran and Scott see a big frog.” “Stan spills his glass in the grass.” “I can swim, skip, and spin.”"}, {"n": 12, "title": "BONUS — Thử thách tổng hợp (Mixed Challenge)", "w": [{"k": "choice", "q": "Which word means “physical activity that keeps you healthy”?", "opts": ["exercise", "homework", "lunch"], "ans": "exercise"}, {"k": "choice", "q": "You THROW a ball with your…", "opts": ["hand", "foot"], "ans": "hand"}, {"k": "choice", "q": "You KICK a ball with your…", "opts": ["foot", "hand"], "ans": "foot"}, {"k": "choice", "q": "In the sentence “The frog can jump and spin,” which word has an S-blend?", "opts": ["frog", "jump", "spin"], "ans": "spin"}, {"k": "bool", "q": "Climbing uses your hands and feet.", "ans": "TRUE", "set": "TF"}, {"k": "input", "q": "Blend the sounds: /f/ /r/ /o/ /g/ = ?", "ans": "frog", "ph": "…"}], "note": "Ôn lại cả 3 phần trên trong 1 vòng thử thách. Word search giấy có ở bản PDF: Tests/tháng 9/01_LanguageArts_Unit1Week5_Day1.pdf"}, {"n": 13, "title": "BONUS — Đến lượt em viết!", "w": [{"k": "write", "q": "What is your favorite way to move your body? Write 1 English sentence using a Vocabulary word (kick, run, climb, jump...)."}]}];
+const KEY = "week5day1quiz_v1";
+let state = {};
+try{ state = JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ state = {}; }
+let checked = false;
+
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function norm(s){ return (s==null?"":String(s)).toLowerCase().trim().replace(/\s+/g,""); }
+function widgetId(ci,wi){ return "q"+CARDS[ci].n+"_"+wi; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+
+function render(){
+  const quiz = document.getElementById("quiz");
+  quiz.innerHTML = "";
+  CARDS.forEach((c,ci)=>{
+    const blue = ci%2===1;
+    const cardEl = document.createElement("div");
+    cardEl.className = "card"+(blue?" blue":"");
+    let h = '<div class="chead"><div class="num">'+c.n+'</div><div class="ctitle">'+c.title+'</div></div>';
+    if(c.note) h += '<p class="cnote">'+c.note+'</p>';
+    c.w.forEach((w,wi)=>{ h += '<div class="w" id="wrap_'+widgetId(ci,wi)+'">'+renderWidget(c,ci,w,wi)+'</div>'; });
+    cardEl.innerHTML = h;
+    quiz.appendChild(cardEl);
+  });
+  bind();
+  updateHud();
+}
+
+function renderWidget(c,ci,w,wi){
+  const id = widgetId(ci,wi);
+  const cur = state[id];
+  if(w.k==="choice"){
+    const q = w.q ? '<span class="wtext">'+esc(w.q)+'</span>' : '';
+    let opts = w.opts.map(o=>'<button class="opt'+(cur===o?' sel':'')+'" data-id="'+id+'" data-val="'+esc(o)+'">'+esc(o)+'</button>').join('');
+    return '<div class="wq">'+q+'</div><div class="opts" id="opts_'+id+'">'+opts+'</div>';
+  }
+  if(w.k==="bool"){
+    const set = w.set==="YN" ? ["YES","NO"] : ["TRUE","FALSE"];
+    const q = '<span class="wtext">'+esc(w.q)+'</span>';
+    let opts = set.map(o=>'<button class="opt'+(cur===o?' sel':'')+'" data-id="'+id+'" data-val="'+o+'">'+o+'</button>').join('');
+    return '<div class="wq">'+q+'</div><div class="opts" id="opts_'+id+'">'+opts+'</div>';
+  }
+  if(w.k==="input"){
+    const lab = w.q ? '<span class="wtext">'+esc(w.q)+'</span>' : '';
+    const wide = (w.ans && w.ans.length>2) ? ' wide':'';
+    return '<div class="wq">'+lab+'<span class="field" id="field_'+id+'"> <input class="txt'+wide+'" id="'+id+'" data-id="'+id+'" value="'+esc(cur||"")+'" placeholder="'+(w.ph||"")+'" autocomplete="off"><span class="markslot"></span></span></div>';
+  }
+  if(w.k==="select"){
+    const q = w.q ? '<span class="wtext">'+esc(w.q)+'</span>' : '';
+    let opts = '<option value="">— choose —</option>'+w.pool.map(o=>'<option value="'+esc(o)+'"'+(cur===o?' selected':'')+'>'+esc(o)+'</option>').join('');
+    return '<div class="wq">'+q+'<span class="field" id="field_'+id+'"><select class="sel" id="'+id+'" data-id="'+id+'">'+opts+'</select><span class="markslot"></span></span></div>';
+  }
+  if(w.k==="write"){
+    return '<div class="wq"><span class="wtext">'+esc(w.q)+'</span></div><textarea class="write" data-id="'+id+'" placeholder="Viết câu trả lời của em…">'+esc(cur||"")+'</textarea>';
+  }
+  return "";
+}
+
+function bind(){
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(checked) return;
+      const id=b.dataset.id, val=b.dataset.val;
+      state[id]=val; save();
+      document.querySelectorAll('.opt[data-id="'+id+'"]').forEach(x=>x.classList.toggle("sel", x.dataset.val===val));
+      updateHud();
+    });
+  });
+  document.querySelectorAll("input.txt, select.sel, textarea.write").forEach(el=>{
+    const ev = el.tagName==="SELECT" ? "change":"input";
+    el.addEventListener(ev,()=>{ if(checked && el.tagName!=="TEXTAREA") return; state[el.dataset.id]=el.value; save(); updateHud(); });
+  });
+}
+
+function gradable(){ let t=[]; CARDS.forEach((c,ci)=>c.w.forEach((w,wi)=>{ if(w.k!=="write") t.push({id:widgetId(ci,wi),w}); })); return t; }
+function answeredCount(){ return gradable().filter(g=>{ const v=state[g.id]; return v!==undefined && v!=="" && v!==null; }).length; }
+
+function updateHud(){
+  const all=gradable(); const ans=answeredCount();
+  document.getElementById("bar").style.width = Math.round(ans/all.length*100)+"%";
+  if(!checked) document.getElementById("chip").textContent = ans+" / "+all.length+" đã làm";
+}
+
+function check(){
+  const all=gradable(); let correct=0;
+  all.forEach(g=>{
+    const w=g.w, id=g.id, val=state[id];
+    let ok=false;
+    if(w.k==="input"){ const acc=(w.accept||[w.ans]).map(norm); ok=acc.includes(norm(val)); }
+    else ok = (val!==undefined && String(val)===String(w.ans));
+    if(ok) correct++;
+    markWidget(g, ok);
+  });
+  checked=true;
+  const pct=Math.round(correct/all.length*100);
+  document.getElementById("chip").textContent = correct+" / "+all.length+" đúng";
+  showResult(pct, correct, all.length);
+  document.getElementById("check").style.display="none";
+  document.getElementById("msg").textContent="Cuộn lên xem đáp án nhé!";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function markWidget(g, ok){
+  const w=g.w, id=g.id;
+  if(w.k==="choice"||w.k==="bool"){
+    document.querySelectorAll('.opt[data-id="'+id+'"]').forEach(b=>{
+      b.classList.remove("sel");
+      if(String(b.dataset.val)===String(w.ans)) b.classList.add("good");
+      else if(b.dataset.val===state[id]) b.classList.add("bad");
+      b.style.pointerEvents="none";
+    });
+  } else {
+    const field=document.getElementById("field_"+id);
+    const el=document.getElementById(id);
+    if(el) el.disabled=true;
+    if(field){
+      field.classList.add(ok?"good":"bad");
+      const slot=field.querySelector(".markslot");
+      if(slot){ slot.innerHTML = ok ? '<span class="mark good">✓</span>' :
+        '<span class="mark bad">✗</span> <span class="correct">'+esc(w.ans)+'</span>'; }
+    }
+  }
+}
+
+function showResult(pct, correct, total){
+  const r=document.getElementById("result"); r.classList.add("show");
+  document.getElementById("rscore").textContent = pct+"%";
+  const nstars = pct>=90?5:pct>=75?4:pct>=60?3:pct>=40?2:1;
+  document.getElementById("rstars").textContent = "⭐".repeat(nstars)+"☆".repeat(5-nstars);
+  let m = pct>=90?"Xuất sắc! Em giỏi quá! 🎉" : pct>=75?"Làm tốt lắm! 👏" :
+          pct>=50?"Cố lên, em làm được! 💪" : "Mình cùng ôn lại nhé! 🌱";
+  document.getElementById("rmsg").textContent = m + "  ("+correct+"/"+total+")";
+}
+
+function reset(){
+  state={}; checked=false; save();
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("check").style.display="";
+  document.getElementById("msg").textContent="";
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.getElementById("check").addEventListener("click",check);
+document.getElementById("reset").addEventListener("click",reset);
+render();
+</script>
+</body>
+</html>
