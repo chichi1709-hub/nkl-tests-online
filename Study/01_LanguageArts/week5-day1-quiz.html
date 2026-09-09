@@ -61,8 +61,13 @@ h1{font-family:"Fredoka";font-weight:700;font-size:clamp(26px,6vw,40px);margin:1
 .scorechip{font-family:"Fredoka";font-weight:600;font-size:14px;color:var(--green-d);
   background:var(--green-soft);border:1.5px solid var(--line);padding:5px 12px;border-radius:999px;white-space:nowrap;}
 
+.megahead{margin:36px 0 6px;text-align:center;}
+.megahead .mt{font-family:"Fredoka";font-weight:700;font-size:23px;color:var(--ink);display:block;}
+.megahead .ms{font-family:"Nunito";font-weight:600;font-size:13.5px;color:var(--muted);display:block;margin-top:4px;}
+.megahead hr{border:none;border-top:3px solid var(--line);margin:10px 0 0;}
+
 .sectionband{font-family:"Fredoka";font-weight:700;color:#fff;border-radius:16px;
-  padding:14px 20px;margin:26px 0 10px;background:linear-gradient(90deg,var(--blue),#5aa9d6);
+  padding:14px 20px;margin:18px 0 10px;background:linear-gradient(90deg,var(--blue),#5aa9d6);
   box-shadow:var(--shadow);}
 .sectionband .t{font-size:19px;letter-spacing:.3px;display:block;}
 .sectionband .s{font-size:13px;font-weight:600;opacity:.94;display:block;margin-top:3px;}
@@ -70,6 +75,7 @@ h1{font-family:"Fredoka";font-weight:700;font-size:clamp(26px,6vw,40px);margin:1
 .sectionband.b2{background:linear-gradient(90deg,#2b6fb0,#5aa9d6);}
 .sectionband.b3{background:linear-gradient(90deg,#7a56c2,#ad8ee4);}
 .sectionband.b4{background:linear-gradient(90deg,#d98b21,#f0c75e);}
+.sectionband.b5{background:linear-gradient(90deg,#c0559e,#e79cc9);}
 .secbar{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;}
 .secbtn{font-family:"Fredoka";font-weight:600;font-size:14.5px;border:0;border-radius:999px;padding:9px 18px;
   background:rgba(255,255,255,.94);color:#2f7a33;cursor:pointer;min-height:42px;}
@@ -122,7 +128,6 @@ input.txt:focus,select.sel:focus{outline:none;border-color:var(--blue);box-shado
 .field.good input,.field.good select{border-color:var(--good);background:var(--green-soft);}
 .field.bad input,.field.bad select{border-color:var(--bad);background:color-mix(in srgb,var(--red) 12%,var(--card));}
 .field{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px;}
-.vi{display:block;font-family:"Nunito";font-weight:600;font-size:13.5px;color:var(--muted);margin-top:2px;}
 textarea.write{width:100%;min-height:88px;font-family:"Nunito";font-size:16px;color:var(--ink);
   background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:12px;resize:vertical;}
 textarea.write:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);}
@@ -165,9 +170,10 @@ textarea.write:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px 
     <p class="sub">Unit 1 · Week 5 · Class Diary 07/09/2026</p>
     <div class="hi" id="hi"></div>
     <div class="howto">
-      <b>Cách làm:</b> quiz có 4 phần — <b>Vocabulary</b> (11 từ chỉ chuyển động, mỗi từ 3 câu: nghĩa · đặt câu · dùng thật + liên hệ bộ phận cơ thể),
-      <b>Oral Vocabulary</b> (exercise, physical), <b>Phonics</b> (r-blends &amp; s-blends), <b>Bonus</b> (ôn lại tất cả).<br>
-      Bé có thể làm <b>từng phần một</b>: bấm “Kiểm tra phần này ✅” ngay ở đầu mỗi phần. Bài làm được <b>tự lưu</b> trong máy, đóng ra mở lại vẫn còn.
+      <b>Cách làm:</b> quiz chia 2 mục — <b>Mục 1: Nội dung từ Class Diary</b> (Vocabulary 11 từ, Oral Vocabulary, Phonics — đúng những gì bé đã học ngày 07/09),
+      và <b>Mục 2: Bài tập bổ sung</b> (liên hệ bộ phận cơ thể, ôn tập, viết câu — giúp bé hiểu sâu hơn, không phải nội dung đã dạy trên lớp).<br>
+      Bé có thể làm <b>từng phần một</b>: bấm "Kiểm tra phần này ✅" ngay ở đầu mỗi phần. Bài làm được <b>tự lưu</b> trong máy, đóng ra mở lại vẫn còn.<br>
+      Toàn bộ câu hỏi và câu trả lời trong quiz là <b>tiếng Anh</b> (không có gợi ý tiếng Việt) để bé luyện phản xạ tiếng Anh trực tiếp.
     </div>
   </header>
 
@@ -178,7 +184,7 @@ textarea.write:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px 
   </div>
 
   <div id="quiz"></div>
-  <p class="foot-note">Nội dung bám đúng Class Diary 1A4 ngày 07/09/2026 · bản in PDF: Tests/tháng 9/01_LanguageArts_Unit1Week5_Day1.pdf</p>
+  <p class="foot-note">Mục 1 bám đúng Class Diary 1A4 ngày 07/09/2026 · bản in PDF: Tests/tháng 9/01_LanguageArts_Unit1Week5_Day1.pdf</p>
 </div>
 
 <div class="footer">
@@ -212,134 +218,118 @@ const MOVE = ["kick","jump","walk","swing","run","spin","flip","stretch","bounce
 
 const CARDS = [
 
-/* ================= PART 1 · VOCABULARY ================= */
-{"divider":true,"sec":"p1","band":"b1","title":"🏃 PART 1 · VOCABULARY","sub":"Ways Our Bodies Move — 11 từ, mỗi từ 3 câu (nghĩa · đặt câu · dùng thật) + liên hệ bộ phận cơ thể"},
+/* ===================================================================
+   SECTION 1 · FROM YOUR CLASS DIARY (07/09/2026)
+   Exactly the words/definitions/sentences taught in class that day.
+   =================================================================== */
+{"heading":true,"title":"📗 SECTION 1 · FROM YOUR CLASS DIARY","sub":"Unit 1 Week 5 — exactly what was taught in class on 07/09/2026"},
 
-{"n":1,"sec":"p1","title":"KICK — đá (bằng chân)","w":[
+{"divider":true,"sec":"vocab","band":"b1","title":"🏃 VOCABULARY","sub":"Ways Our Bodies Move — 11 words, 3 questions each (meaning · sentence · real use)"},
+
+{"n":1,"sec":"vocab","title":"KICK","w":[
   {"k":"choice","q":"What does “kick” mean?","opts":["to catch something with your hand","to hit something with your foot","to sit down and rest"],"ans":"to hit something with your foot","img":"ball"},
   {"k":"choice","q":"Fill in: “I ___ the ball with my foot.”","opts":["stretch","climb","kick"],"ans":"kick","img":"ball"},
   {"k":"choice","q":"You kick with your…","opts":["foot","ear","nose"],"ans":"foot","img":"body"}
 ]},
-{"n":2,"sec":"p1","title":"JUMP — nhảy lên","w":[
+{"n":2,"sec":"vocab","title":"JUMP","w":[
   {"k":"choice","q":"What does “jump” mean?","opts":["to move very slowly","to hold something tight","to push your body up off the ground"],"ans":"to push your body up off the ground","img":"jump"},
   {"k":"choice","q":"Fill in: “I can ___ over the rope.”","opts":["jump","throw","walk"],"ans":"jump","img":"jump"},
   {"k":"choice","q":"Which body part do you use to jump?","opts":["your ears","your two legs","your teeth"],"ans":"your two legs","img":"body"}
 ]},
-{"n":3,"sec":"p1","title":"WALK — đi bộ","w":[
+{"n":3,"sec":"vocab","title":"WALK","w":[
   {"k":"choice","q":"What does “walk” mean?","opts":["to move by taking steps, not fast","to fly in the sky","to turn in a circle"],"ans":"to move by taking steps, not fast","img":"walk"},
   {"k":"choice","q":"Fill in: “We ___ to school every morning.”","opts":["spin","walk","bounce"],"ans":"walk","img":"walk"},
   {"k":"choice","q":"Which one is SLOWER?","opts":["run","walk"],"ans":"walk","img":"star"}
 ]},
-{"n":4,"sec":"p1","title":"SWING — đưa / lắc qua lại","w":[
+{"n":4,"sec":"vocab","title":"SWING","w":[
   {"k":"choice","q":"What does “swing” mean?","opts":["to eat a snack","to move back and forth","to go to sleep"],"ans":"to move back and forth","img":"swing"},
   {"k":"choice","q":"Fill in: “I ___ my arms back and forth.”","opts":["swing","climb","kick"],"ans":"swing","img":"swing"},
   {"k":"choice","q":"What do you swing on at the park?","opts":["a book","a plate","a swing"],"ans":"a swing","img":"star"}
 ]},
-{"n":5,"sec":"p1","title":"RUN — chạy","w":[
+{"n":5,"sec":"vocab","title":"RUN","w":[
   {"k":"choice","q":"What does “run” mean?","opts":["to stand still","to sit on a chair","to move very fast with your legs"],"ans":"to move very fast with your legs","img":"run"},
   {"k":"choice","q":"Fill in: “He can ___ very fast in the race.”","opts":["stretch","run","throw"],"ans":"run","img":"run"},
   {"k":"choice","q":"Which one is FASTER?","opts":["run","walk"],"ans":"run","img":"star"}
 ]},
-{"n":6,"sec":"p1","title":"SPIN — quay vòng vòng","w":[
+{"n":6,"sec":"vocab","title":"SPIN","w":[
   {"k":"choice","q":"What does “spin” mean?","opts":["to turn around and around","to go up a tree","to throw a ball"],"ans":"to turn around and around","img":"spin"},
   {"k":"choice","q":"Fill in: “She can ___ around and around like a top.”","opts":["bounce","spin","walk"],"ans":"spin","img":"spin"},
   {"k":"choice","q":"When you spin a lot, you feel…","opts":["hungry","sleepy","dizzy"],"ans":"dizzy","img":"face_happy"}
 ]},
-{"n":7,"sec":"p1","title":"FLIP — lộn người / trở mặt","w":[
+{"n":7,"sec":"vocab","title":"FLIP","w":[
   {"k":"choice","q":"What does “flip” mean?","opts":["to walk slowly","to turn your body over","to hold hands"],"ans":"to turn your body over","img":"flip"},
   {"k":"choice","q":"Fill in: “The gymnast can ___ over in the air.”","opts":["flip","walk","stretch"],"ans":"flip","img":"flip"},
   {"k":"choice","q":"In the kitchen, we ___ a pancake in the pan.","opts":["climb","kick","flip"],"ans":"flip","img":"star"}
 ]},
-{"n":8,"sec":"p1","title":"STRETCH — vươn / giãn người","w":[
+{"n":8,"sec":"vocab","title":"STRETCH","w":[
   {"k":"choice","q":"What does “stretch” mean?","opts":["to make your arms or legs long","to run very fast","to sit down"],"ans":"to make your arms or legs long","img":"stretch"},
   {"k":"choice","q":"Fill in: “I ___ my arms up high before I run.”","opts":["bounce","throw","stretch"],"ans":"stretch","img":"stretch"},
   {"k":"choice","q":"When do we stretch?","opts":["when we sleep","before we exercise","when we read"],"ans":"before we exercise","img":"muscle"}
 ]},
-{"n":9,"sec":"p1","title":"BOUNCE — nảy lên xuống","w":[
+{"n":9,"sec":"vocab","title":"BOUNCE","w":[
   {"k":"choice","q":"What does “bounce” mean?","opts":["to lie down","to go around in a circle","to go up and down"],"ans":"to go up and down","img":"ball"},
   {"k":"choice","q":"Fill in: “The ball can ___ up and down.”","opts":["bounce","climb","walk"],"ans":"bounce","img":"ball"},
   {"k":"choice","q":"Which one can bounce?","opts":["a book","a ball","a shoe"],"ans":"a ball","img":"star"}
 ]},
-{"n":10,"sec":"p1","title":"THROW — ném (bằng tay)","w":[
+{"n":10,"sec":"vocab","title":"THROW","w":[
   {"k":"choice","q":"What does “throw” mean?","opts":["to send something through the air with your hand","to hit something with your foot","to go up a ladder"],"ans":"to send something through the air with your hand","img":"ball"},
   {"k":"choice","q":"Fill in: “I ___ the ball to my friend.”","opts":["spin","stretch","throw"],"ans":"throw","img":"ball"},
   {"k":"choice","q":"We throw with a ___ , but we kick with a ___ .","opts":["foot … hand","hand … foot","ear … nose"],"ans":"hand … foot","img":"body"}
 ]},
-{"n":11,"sec":"p1","title":"CLIMB — leo / trèo","w":[
+{"n":11,"sec":"vocab","title":"CLIMB","w":[
   {"k":"choice","q":"What does “climb” mean?","opts":["to run on flat ground","to sit and rest","to go up using your hands and feet"],"ans":"to go up using your hands and feet","img":"climb"},
   {"k":"choice","q":"Fill in: “The monkey can ___ up the tree.”","opts":["climb","bounce","walk"],"ans":"climb","img":"climb"},
   {"k":"choice","q":"Which one can you climb?","opts":["a cup","a tree","a hat"],"ans":"a tree","img":"star"}
 ]},
-{"n":12,"sec":"p1","title":"VOCABULARY + BODY PARTS (1/2) — Which body part do you use?","w":[
-  {"k":"choice","q":"Which body part do you use most to KICK a ball?","opts":["foot","hand","ear"],"ans":"foot","img":"body"},
-  {"k":"choice","q":"Which body part do you use most to THROW a ball?","opts":["hand","foot","nose"],"ans":"hand","img":"body"},
-  {"k":"choice","q":"Which body parts do you use to WALK?","opts":["legs and feet","hands","ears"],"ans":"legs and feet","img":"body"},
-  {"k":"choice","q":"Which body parts do you use to RUN?","opts":["legs","arms only","mouth"],"ans":"legs","img":"body"},
-  {"k":"choice","q":"Which body parts do you use to JUMP?","opts":["legs","hands only","hair"],"ans":"legs","img":"body"},
-  {"k":"choice","q":"Which body parts do you use to CLIMB?","opts":["hands and feet","ears","eyes"],"ans":"hands and feet","img":"body"}
-]},
-{"n":13,"sec":"p1","title":"VOCABULARY + BODY PARTS (2/2) — Which body part do you use?","w":[
-  {"k":"choice","q":"When you SPIN, what moves?","opts":["your whole body","only your nose","only your hair"],"ans":"your whole body","img":"body"},
-  {"k":"choice","q":"When you SWING your arms, which body part moves?","opts":["arms","legs","ears"],"ans":"arms","img":"body"},
-  {"k":"choice","q":"When you STRETCH, what do you reach out?","opts":["your arms and legs","your eyes","your teeth"],"ans":"your arms and legs","img":"body"},
-  {"k":"choice","q":"When you FLIP like a somersault, what moves?","opts":["your whole body","only your finger","only your tongue"],"ans":"your whole body","img":"body"},
-  {"k":"choice","q":"Which body part do you use to BOUNCE a ball?","opts":["hand","foot","elbow"],"ans":"hand","img":"body"}
-]},
 
-/* ================= PART 2 · ORAL VOCABULARY ================= */
-{"divider":true,"sec":"p2","band":"b2","title":"💪 PART 2 · ORAL VOCABULARY","sub":"exercise · physical — nghĩa, đặt câu và ví dụ thật"},
+{"divider":true,"sec":"oralvocab","band":"b2","title":"💪 ORAL VOCABULARY","sub":"exercise · physical — meaning, sentence, and a real example"},
 
-{"n":14,"sec":"p2","title":"EXERCISE — vận động, tập thể dục","w":[
+{"n":12,"sec":"oralvocab","title":"EXERCISE","w":[
   {"k":"choice","q":"What does “exercise” mean?","opts":["eating a big cake","moving your body to make it strong and healthy","watching TV all day"],"ans":"moving your body to make it strong and healthy","img":"muscle"},
   {"k":"choice","q":"Fill in: “Doing ___ every day helps your body stay strong.”","opts":["exercise","physical","stretch"],"ans":"exercise","img":"muscle"},
   {"k":"choice","q":"Which one is exercise?","opts":["watching a movie","eating dinner","riding a bike"],"ans":"riding a bike","img":"run"},
   {"k":"choice","q":"Which one is NOT exercise?","opts":["sleeping in bed","running in the park","swimming in a pool"],"ans":"sleeping in bed","img":"star"}
 ]},
-{"n":15,"sec":"p2","title":"PHYSICAL — thuộc về cơ thể","w":[
+{"n":13,"sec":"oralvocab","title":"PHYSICAL","w":[
   {"k":"choice","q":"The word “physical” is about…","opts":["your homework","your body","your lunch"],"ans":"your body","img":"body"},
   {"k":"choice","q":"Fill in: “Running, jumping, and swimming are all kinds of ___ activity.”","opts":["physical","exercise","bounce"],"ans":"physical","img":"body"},
   {"k":"choice","q":"A “physical activity” is something you do with your…","opts":["pencil","spoon","body"],"ans":"body","img":"body"},
   {"k":"choice","q":"Which one is a physical activity?","opts":["playing soccer","reading quietly","coloring a picture"],"ans":"playing soccer","img":"ball"}
 ]},
-{"n":16,"sec":"p2","title":"TRUE or FALSE? Đúng hay Sai?","w":[
-  {"k":"choice","q":"Reading a book quietly is exercise.","opts":["TRUE","FALSE"],"ans":"FALSE","img":"book"},
-  {"k":"choice","q":"Jumping rope is a physical activity.","opts":["TRUE","FALSE"],"ans":"TRUE","img":"muscle"}
-]},
 
-/* ================= PART 3 · PHONICS ================= */
-{"divider":true,"sec":"p3","band":"b3","title":"🔤 PART 3 · PHONICS","sub":"r-blends &amp; s-blends — đúng bộ từ đã luyện trong lớp ngày 07/09"},
+{"divider":true,"sec":"phonics","band":"b3","title":"🔤 PHONICS","sub":"r-blends & s-blends — the exact word list and sentences practiced in class"},
 
-{"n":17,"sec":"p3","title":"R-blends. What is the beginning blend?","w":[
+{"n":14,"sec":"phonics","title":"R-blends. What is the beginning blend?","w":[
   {"k":"choice","q":"frog","opts":["fl","fr","fo"],"ans":"fr","img":"abc"},
   {"k":"choice","q":"trap","opts":["tr","tp","ta"],"ans":"tr","img":"abc"},
   {"k":"choice","q":"grin","opts":["gl","gn","gr"],"ans":"gr","img":"abc"},
   {"k":"choice","q":"brick","opts":["bl","br","bi"],"ans":"br","img":"abc"}
 ]},
-{"n":18,"sec":"p3","title":"More R-blends. What is the beginning blend?","w":[
+{"n":15,"sec":"phonics","title":"More R-blends. What is the beginning blend?","w":[
   {"k":"choice","q":"grab","opts":["gr","gl","ga"],"ans":"gr","img":"abc"},
   {"k":"choice","q":"drag","opts":["da","dl","dr"],"ans":"dr","img":"abc"},
   {"k":"choice","q":"crab","opts":["cl","cr","ca"],"ans":"cr","img":"abc"},
   {"k":"choice","q":"trot","opts":["tr","tl","to"],"ans":"tr","img":"abc"}
 ]},
-{"n":19,"sec":"p3","title":"S-blends. What is the beginning blend?","w":[
+{"n":16,"sec":"phonics","title":"S-blends. What is the beginning blend?","w":[
   {"k":"choice","q":"stick","opts":["sl","st","sp"],"ans":"st","img":"abc"},
   {"k":"choice","q":"swim","opts":["sw","sm","sn"],"ans":"sw","img":"abc"},
   {"k":"choice","q":"snack","opts":["sk","st","sn"],"ans":"sn","img":"abc"},
   {"k":"choice","q":"skin","opts":["sn","sk","sw"],"ans":"sk","img":"abc"}
 ]},
-{"n":20,"sec":"p3","title":"More S-blends. What is the beginning blend?","w":[
+{"n":17,"sec":"phonics","title":"More S-blends. What is the beginning blend?","w":[
   {"k":"choice","q":"spin","opts":["st","sn","sp"],"ans":"sp","img":"abc"},
   {"k":"choice","q":"stack","opts":["st","sk","sw"],"ans":"st","img":"abc"},
   {"k":"choice","q":"slap","opts":["sp","sl","st"],"ans":"sl","img":"abc"},
   {"k":"choice","q":"slip","opts":["sn","sk","sl"],"ans":"sl","img":"abc"}
 ]},
-{"n":21,"sec":"p3","title":"Other blends from class (bl, cl, fl, pl).","w":[
+{"n":18,"sec":"phonics","title":"Other blends from class (bl, cl, fl, pl).","w":[
   {"k":"choice","q":"block","opts":["br","bo","bl"],"ans":"bl","img":"abc"},
   {"k":"choice","q":"clip","opts":["cl","cr","ci"],"ans":"cl","img":"abc"},
   {"k":"choice","q":"flag","opts":["fr","fl","fa"],"ans":"fl","img":"abc"},
   {"k":"choice","q":"plop","opts":["pr","po","pl"],"ans":"pl","img":"abc"}
 ]},
-{"n":22,"sec":"p3","title":"Is it an R-blend or an S-blend?","w":[
+{"n":19,"sec":"phonics","title":"Is it an R-blend or an S-blend?","w":[
   {"k":"select","pool":["R-blend","S-blend"],"ans":"R-blend","q":"frog"},
   {"k":"select","pool":["R-blend","S-blend"],"ans":"S-blend","q":"stick"},
   {"k":"select","pool":["R-blend","S-blend"],"ans":"R-blend","q":"grab"},
@@ -351,36 +341,64 @@ const CARDS = [
   {"k":"select","pool":["R-blend","S-blend"],"ans":"R-blend","q":"brick"},
   {"k":"select","pool":["R-blend","S-blend"],"ans":"S-blend","q":"stack"}
 ]},
-{"n":23,"sec":"p3","title":"Blend or no blend? Listen carefully.","w":[
+{"n":20,"sec":"phonics","title":"Blend or no blend? Listen carefully.","w":[
   {"k":"choice","q":"Which word HAS a blend at the start?","opts":["rag","drag"],"ans":"drag","img":"abc"},
   {"k":"choice","q":"Which word HAS a blend at the start?","opts":["stack","sack"],"ans":"stack","img":"abc"},
   {"k":"choice","q":"Which word does NOT have a blend at the start?","opts":["stick","sack"],"ans":"sack","img":"abc"},
   {"k":"choice","q":"Which word does NOT have a blend at the start?","opts":["rag","trap"],"ans":"rag","img":"abc"}
 ]},
-{"n":24,"sec":"p3","title":"Blend the sounds. Write the word.","w":[
+{"n":21,"sec":"phonics","title":"Blend the sounds. Write the word.","w":[
   {"k":"input","q":"/f/ /r/ /o/ /g/ =","ans":"frog","ph":"…"},
   {"k":"input","q":"/s/ /w/ /i/ /m/ =","ans":"swim","ph":"…"},
   {"k":"input","q":"/k/ /r/ /a/ /b/ =","ans":"crab","ph":"…"},
   {"k":"input","q":"/s/ /p/ /i/ /n/ =","ans":"spin","ph":"…"}
 ]},
-{"n":25,"sec":"p3","title":"Write the missing blend (2 letters).","w":[
-  {"k":"input","q":"__og","vi":"con vật màu xanh, hay nhảy","ans":"fr","ph":"__"},
-  {"k":"input","q":"__ick","vi":"cái que nhỏ em nhặt dưới gốc cây","ans":"st","ph":"__"},
-  {"k":"input","q":"__ab","vi":"con vật có hai cái càng to","ans":"cr","ph":"__"},
-  {"k":"input","q":"__ack","vi":"món ăn nhỏ giữa giờ","ans":"sn","ph":"__"},
-  {"k":"input","q":"__im","vi":"bơi trong nước","ans":"sw","ph":"__"}
+{"n":22,"sec":"phonics","title":"Write the missing blend (2 letters).","w":[
+  {"k":"input","q":"__og (a small green animal that hops)","ans":"fr","ph":"__"},
+  {"k":"input","q":"__ick (a thin piece of wood you pick up outside)","ans":"st","ph":"__"},
+  {"k":"input","q":"__ab (a sea animal with two big claws)","ans":"cr","ph":"__"},
+  {"k":"input","q":"__ack (a small food you eat between meals)","ans":"sn","ph":"__"},
+  {"k":"input","q":"__im (to move through water)","ans":"sw","ph":"__"}
 ]},
-{"n":26,"sec":"p3","title":"Sentences from class. Read and answer.","w":[
+{"n":23,"sec":"phonics","title":"Sentences from class. Read and answer.","w":[
   {"k":"choice","q":"“Fran and Scott see a big frog.” Which word starts with a blend?","opts":["see","frog","big"],"ans":"frog","img":"book"},
   {"k":"choice","q":"“Stan spills his glass in the grass.” Which word starts with an S-blend?","opts":["his","in","spills"],"ans":"spills","img":"book"},
   {"k":"choice","q":"“Stan spills his glass in the grass.” Which word starts with the R-blend “gr”?","opts":["glass","grass","spills"],"ans":"grass","img":"book"},
   {"k":"choice","q":"“I can swim, skip, and spin. Can you?” How many words start with an S-blend?","opts":["1","3","2"],"ans":"3","img":"book"}
 ]},
 
-/* ================= PART 4 · BONUS ================= */
-{"divider":true,"sec":"p4","band":"b4","title":"🎁 PART 4 · BONUS","sub":"Ôn lại tất cả 11 từ chuyển động + exercise/physical — chọn từ trong danh sách"},
+/* ===================================================================
+   SECTION 2 · EXTRA PRACTICE FOR DEEPER UNDERSTANDING
+   Not directly from the Diary — added to help the child understand
+   the words more deeply (body-part connections, mixed review, writing).
+   =================================================================== */
+{"heading":true,"title":"📘 SECTION 2 · EXTRA PRACTICE","sub":"Not from the Diary — extra questions to help your child understand the words more deeply"},
 
-{"n":27,"sec":"p4","title":"Match the meaning. Chọn từ đúng cho mỗi nghĩa.","w":[
+{"divider":true,"sec":"bodyparts","band":"b4","title":"🤸 VOCABULARY + BODY PARTS","sub":"Connect each movement word to the body part you use"},
+
+{"n":24,"sec":"bodyparts","title":"Which body part do you use? (1/2)","w":[
+  {"k":"choice","q":"Which body part do you use most to KICK a ball?","opts":["foot","hand","ear"],"ans":"foot","img":"body"},
+  {"k":"choice","q":"Which body part do you use most to THROW a ball?","opts":["hand","foot","nose"],"ans":"hand","img":"body"},
+  {"k":"choice","q":"Which body parts do you use to WALK?","opts":["legs and feet","hands","ears"],"ans":"legs and feet","img":"body"},
+  {"k":"choice","q":"Which body parts do you use to RUN?","opts":["legs","arms only","mouth"],"ans":"legs","img":"body"},
+  {"k":"choice","q":"Which body parts do you use to JUMP?","opts":["legs","hands only","hair"],"ans":"legs","img":"body"},
+  {"k":"choice","q":"Which body parts do you use to CLIMB?","opts":["hands and feet","ears","eyes"],"ans":"hands and feet","img":"body"}
+]},
+{"n":25,"sec":"bodyparts","title":"Which body part do you use? (2/2)","w":[
+  {"k":"choice","q":"When you SPIN, what moves?","opts":["your whole body","only your nose","only your hair"],"ans":"your whole body","img":"body"},
+  {"k":"choice","q":"When you SWING your arms, which body part moves?","opts":["arms","legs","ears"],"ans":"arms","img":"body"},
+  {"k":"choice","q":"When you STRETCH, what do you reach out?","opts":["your arms and legs","your eyes","your teeth"],"ans":"your arms and legs","img":"body"},
+  {"k":"choice","q":"When you FLIP like a somersault, what moves?","opts":["your whole body","only your finger","only your tongue"],"ans":"your whole body","img":"body"},
+  {"k":"choice","q":"Which body part do you use to BOUNCE a ball?","opts":["hand","foot","elbow"],"ans":"hand","img":"body"}
+]},
+
+{"divider":true,"sec":"bonus","band":"b5","title":"🎁 BONUS","sub":"Review everything in new ways — matching, spelling, and your own sentences"},
+
+{"n":26,"sec":"bonus","title":"True or False?","w":[
+  {"k":"choice","q":"Reading a book quietly is exercise.","opts":["TRUE","FALSE"],"ans":"FALSE","img":"book"},
+  {"k":"choice","q":"Jumping rope is a physical activity.","opts":["TRUE","FALSE"],"ans":"TRUE","img":"muscle"}
+]},
+{"n":27,"sec":"bonus","title":"Match the Meaning","w":[
   {"k":"select","pool":MOVE,"ans":"bounce","q":"to go up and down, like a ball","img":"ball"},
   {"k":"select","pool":MOVE,"ans":"climb","q":"to go up a tree with your hands and feet","img":"climb"},
   {"k":"select","pool":MOVE,"ans":"spin","q":"to turn around and around in a circle","img":"spin"},
@@ -393,7 +411,7 @@ const CARDS = [
   {"k":"select","pool":MOVE,"ans":"jump","q":"to push your body up off the ground","img":"jump"},
   {"k":"select","pool":MOVE,"ans":"flip","q":"to turn your body over in the air","img":"flip"}
 ]},
-{"n":28,"sec":"p4","title":"Finish the sentence. Chọn từ đúng.","w":[
+{"n":28,"sec":"bonus","title":"Finish the Sentence","w":[
   {"k":"select","pool":MOVE,"ans":"jump","q":"The kangaroo can ___ very high.","img":"jump"},
   {"k":"select","pool":MOVE,"ans":"walk","q":"Please ___ slowly in the hallway.","img":"walk"},
   {"k":"select","pool":MOVE,"ans":"stretch","q":"I ___ my legs before soccer practice.","img":"stretch"},
@@ -406,18 +424,18 @@ const CARDS = [
   {"k":"select","pool":MOVE,"ans":"run","q":"I ___ fast to catch the bus.","img":"run"},
   {"k":"select","pool":MOVE,"ans":"flip","q":"He can ___ over in the air like a gymnast.","img":"flip"}
 ]},
-{"n":29,"sec":"p4","title":"Which body part? Bộ phận nào của cơ thể?","w":[
+{"n":29,"sec":"bonus","title":"Which Body Part?","w":[
   {"k":"choice","q":"Which one do you do with your FOOT?","opts":["throw","kick","clap"],"ans":"kick","img":"body"},
   {"k":"choice","q":"Which one do you do with your HAND?","opts":["throw","kick","jump"],"ans":"throw","img":"body"},
   {"k":"choice","q":"Which one uses your HANDS and FEET together?","opts":["throw","climb","walk"],"ans":"climb","img":"climb"},
   {"k":"choice","q":"Which one uses your legs to move you fast?","opts":["run","throw","stretch"],"ans":"run","img":"run"}
 ]},
-{"n":30,"sec":"p4","title":"Odd one out. Từ nào KHÔNG cùng nhóm?","w":[
+{"n":30,"sec":"bonus","title":"Odd One Out","w":[
   {"k":"choice","q":"Which word is NOT a way to move your body?","opts":["snack","jump","climb"],"ans":"snack","img":"star"},
   {"k":"choice","q":"Which word is NOT a way to move your body?","opts":["run","brick","spin"],"ans":"brick","img":"star"},
   {"k":"choice","q":"Which word IS a way to move your body?","opts":["frog","crab","stretch"],"ans":"stretch","img":"star"}
 ]},
-{"n":31,"sec":"p4","title":"Write the missing letter. Điền chữ còn thiếu.","w":[
+{"n":31,"sec":"bonus","title":"Write the Missing Letter","w":[
   {"k":"input","q":"cl _ mb","ans":"i","ph":"…","img":"climb"},
   {"k":"input","q":"str _ tch","ans":"e","ph":"…","img":"stretch"},
   {"k":"input","q":"b _ unce","ans":"o","ph":"…","img":"ball"},
@@ -425,19 +443,19 @@ const CARDS = [
   {"k":"input","q":"sw _ ng","ans":"i","ph":"…","img":"swing"},
   {"k":"input","q":"j _ mp","ans":"u","ph":"…","img":"jump"}
 ]},
-{"n":32,"sec":"p4","title":"Spell the word. Viết cả từ.","w":[
+{"n":32,"sec":"bonus","title":"Spell the Word","w":[
   {"k":"input","q":"to hit a ball with your foot →","ans":"kick","ph":"…","img":"ball"},
   {"k":"input","q":"to turn around and around →","ans":"spin","ph":"…","img":"spin"},
   {"k":"input","q":"to go up a tree →","ans":"climb","ph":"…","img":"climb"},
   {"k":"input","q":"to send a ball with your hand →","ans":"throw","ph":"…","img":"ball"}
 ]},
-{"n":33,"sec":"p4","title":"Essential Question. Viết câu trả lời của em.","w":[
-  {"k":"write","q":"How does your body move? Viết 2 câu. (VD: “I can run fast. I can jump high.”)"},
-  {"k":"write","q":"Viết 1 câu dùng từ “exercise”. (VD: “I exercise every day.”)"}
+{"n":33,"sec":"bonus","title":"Essential Question","w":[
+  {"k":"write","q":"How does your body move? Write 2 sentences. (e.g. “I can run fast. I can jump high.”)"},
+  {"k":"write","q":"Write 1 sentence using the word “exercise”. (e.g. “I exercise every day.”)"}
 ]}
 ];
 
-const KEY = "week5day1quiz_v2";
+const KEY = "week5day1quiz_v3";
 let state = {};
 try{ state = JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ state = {}; }
 let checked = false;
@@ -446,7 +464,7 @@ const locked = new Set();
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
 function norm(s){ return (s==null?"":String(s)).toLowerCase().trim().replace(/\s+/g,""); }
 function tile(k){ return SVGS[k] ? '<span class="tile">'+SVGS[k]+'</span>' : ''; }
-function widgetId(ci,wi){ return "q"+CARDS[ci].n+"_"+wi; }
+function widgetId(ci,wi){ return "q"+ci+"_"+wi; }
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
 
 function render(){
@@ -454,6 +472,13 @@ function render(){
   quiz.innerHTML = "";
   let colorToggle = 0;
   CARDS.forEach((c,ci)=>{
+    if(c.heading){
+      const div = document.createElement("div");
+      div.className = "megahead";
+      div.innerHTML = '<span class="mt">'+c.title+'</span><span class="ms">'+c.sub+'</span><hr>';
+      quiz.appendChild(div);
+      return;
+    }
     if(c.divider){
       const div = document.createElement("div");
       div.className = "sectionband "+(c.band||"b2");
@@ -479,9 +504,8 @@ function renderWidget(c,ci,w,wi){
   const id = widgetId(ci,wi);
   const cur = state[id];
   const img = w.img ? tile(w.img) : "";
-  const vi = w.vi ? '<span class="vi">'+w.vi+'</span>' : '';
   if(w.k==="choice"){
-    const q = w.q ? '<span class="wtext">'+w.q+vi+'</span>' : '';
+    const q = w.q ? '<span class="wtext">'+w.q+'</span>' : '';
     let opts = w.opts.map(o=>'<button class="opt'+(cur===o?' sel':'')+'" data-id="'+id+'" data-val="'+esc(o)+'">'+o+'</button>').join('');
     return '<div class="wq">'+img+q+'</div><div class="opts" id="opts_'+id+'">'+opts+'</div>';
   }
@@ -489,15 +513,15 @@ function renderWidget(c,ci,w,wi){
     const lab = w.q ? '<span class="letters">'+w.q+'</span>' : '';
     const wide = (w.ans && w.ans.length>2) ? ' wide':'';
     return '<div class="wq">'+img+'<span class="field" id="field_'+id+'">'+lab+
-      ' <input class="txt'+wide+'" id="'+id+'" data-id="'+id+'" value="'+esc(cur||"")+'" placeholder="'+(w.ph||"")+'" autocomplete="off"><span class="markslot"></span></span>'+vi+'</div>';
+      ' <input class="txt'+wide+'" id="'+id+'" data-id="'+id+'" value="'+esc(cur||"")+'" placeholder="'+(w.ph||"")+'" autocomplete="off"><span class="markslot"></span></span></div>';
   }
   if(w.k==="select"){
-    const q = w.q ? '<span class="wtext">'+w.q+vi+'</span>' : '';
+    const q = w.q ? '<span class="wtext">'+w.q+'</span>' : '';
     let opts = '<option value="">— choose —</option>'+w.pool.map(o=>'<option value="'+esc(o)+'"'+(cur===o?' selected':'')+'>'+o+'</option>').join('');
     return '<div class="wq">'+img+q+'<span class="field" id="field_'+id+'"><select class="sel" id="'+id+'" data-id="'+id+'">'+opts+'</select><span class="markslot"></span></span></div>';
   }
   if(w.k==="write"){
-    return '<div class="wq"><span class="wtext">'+w.q+'</span></div><textarea class="write" data-id="'+id+'" placeholder="Viết câu trả lời của em…">'+esc(cur||"")+'</textarea>';
+    return '<div class="wq"><span class="wtext">'+w.q+'</span></div><textarea class="write" data-id="'+id+'" placeholder="Write your answer…">'+esc(cur||"")+'</textarea>';
   }
   return "";
 }
@@ -527,7 +551,7 @@ function bind(){
 function gradable(sec){
   let t=[];
   CARDS.forEach((c,ci)=>{
-    if(c.divider) return;
+    if(c.heading || c.divider) return;
     if(sec && c.sec!==sec) return;
     c.w.forEach((w,wi)=>{ if(w.k!=="write") t.push({id:widgetId(ci,wi),w}); });
   });
